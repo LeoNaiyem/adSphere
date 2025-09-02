@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -44,5 +45,27 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    // Wishlist relation
+    public function wishlist()
+    {
+        return $this->belongsToMany(Product::class, 'wishlists')
+            ->withTimestamps();
+    }
+
+    // Recently viewed relation
+    public function recentlyViewed()
+    {
+        return $this->belongsToMany(Product::class, 'recently_viewed_products')
+            ->withPivot('viewed_at')
+            ->withTimestamps()
+            ->orderByPivot('viewed_at', 'desc');
+    }
+
+    // Check if user is admin
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
     }
 }
