@@ -22,7 +22,9 @@ class StoreProductDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'product_id' => ['required', 'exists:products,id'],
+            'attribute_name' => ['required', 'string', 'max:255'],
+            'attribute_value' => ['required', 'string', 'max:255'],
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\RecentlyViewedProduct;
 use App\Http\Requests\StoreRecentlyViewedProductRequest;
 use App\Http\Requests\UpdateRecentlyViewedProductRequest;
@@ -29,7 +30,13 @@ class RecentlyViewedProductController extends Controller
      */
     public function store(StoreRecentlyViewedProductRequest $request)
     {
-        //
+        $product = Product::findOrFail($request->product_id);
+
+        auth()->user()->recentlyViewed()->syncWithoutDetaching([
+            $product->id => ['viewed_at' => now()]
+        ]);
+
+        return back();
     }
 
     /**

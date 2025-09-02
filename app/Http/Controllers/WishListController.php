@@ -2,65 +2,36 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\WishList;
-use App\Http\Requests\StoreWishListRequest;
-use App\Http\Requests\UpdateWishListRequest;
+use App\Http\Requests\WishlistRequest;
+use App\Models\Product;
+use Inertia\Inertia;
 
-class WishListController extends Controller
+class WishlistController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        $wishlist = auth()->user()
+            ->wishlist()
+            ->with(['brand', 'category'])
+            ->get();
+
+        return Inertia::render('Wishlist/Index', [
+            'wishlist' => $wishlist,
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function store(WishlistRequest $request)
     {
-        //
+        $product = Product::findOrFail($request->product_id);
+        auth()->user()->wishlist()->syncWithoutDetaching([$product->id]);
+
+        return back()->with('success', 'Product added to wishlist.');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreWishListRequest $request)
+    public function destroy(Product $product)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(WishList $wishList)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(WishList $wishList)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateWishListRequest $request, WishList $wishList)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(WishList $wishList)
-    {
-        //
+        auth()->user()->wishlist()->detach($product->id);
+        return back()->with('success', 'Product removed from wishlist.');
     }
 }
