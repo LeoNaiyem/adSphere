@@ -49,7 +49,7 @@ function toggleMobile() {
     >
       <!-- Logo + Collapse -->
       <div class="flex items-center justify-between p-4 border-b">
-        <span class="text-xl font-bold text-blue-600" v-if="!collapsed">Admin Panel</span>
+        <span class="text-xl font-bold text-blue-600" v-if="!collapsed">AdSphere</span>
         <!-- Desktop collapse -->
         <button @click="toggleSidebar" class="hidden md:block p-2 hover:bg-gray-100">
           <i :class="collapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-left'"></i>
