@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\RecentlyViewedProduct;
 use App\Http\Requests\StoreRecentlyViewedProductRequest;
 use App\Http\Requests\UpdateRecentlyViewedProductRequest;
+use Inertia\Inertia;
 
 class RecentlyViewedProductController extends Controller
 {
@@ -14,7 +15,15 @@ class RecentlyViewedProductController extends Controller
      */
     public function index()
     {
-        //
+        $recentlyViewed = auth()->user()
+            ->recentlyViewed()
+            ->with(['brand', 'category'])
+            ->orderByPivot('viewed_at', 'desc')
+            ->get();
+
+        return Inertia::render('RecentlyViewed/Index', [
+            'recentlyViewed' => $recentlyViewed,
+        ]);
     }
 
     /**

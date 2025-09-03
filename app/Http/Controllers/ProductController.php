@@ -8,7 +8,8 @@ use Inertia\Inertia;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Brand;
-use Request;
+use Illuminate\Http\Request;
+
 
 class ProductController extends Controller
 {

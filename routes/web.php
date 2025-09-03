@@ -42,11 +42,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/wishlist/{product}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
     // Recently Viewed
+    Route::get('/recently-viewed', [RecentlyViewedProductController::class, 'index'])->name('recently-viewed.index');
     Route::post('/recently-viewed', [RecentlyViewedProductController::class, 'store'])->name('recently-viewed.store');
 });
 
 // Admin routes
-Route::middleware(['auth', 'verified', 'admin'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('brands', BrandController::class);
     Route::resource('products', ProductController::class);

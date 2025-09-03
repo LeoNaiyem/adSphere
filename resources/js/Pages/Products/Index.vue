@@ -1,19 +1,19 @@
 <script setup>
 import { Link, useForm } from "@inertiajs/vue3";
 
-defineProps({
+const {products,categories,brands,filters} =defineProps({
   products: Object,
   categories: Array,
   brands: Array,
-  filters: Object, // current filter values (passed from controller)
+  filters: Object,
 });
 
 const form = useForm({
-  category_id: filters.category_id || "",
-  brand_id: filters.brand_id || "",
-  condition: filters.condition || "",
-  min_price: filters.min_price || "",
-  max_price: filters.max_price || "",
+  category_id: filters?.category_id || "",
+  brand_id: filters?.brand_id || "",
+  condition: filters?.condition || "",
+  min_price: filters?.min_price || "",
+  max_price: filters?.max_price || "",
 });
 
 function applyFilters() {
