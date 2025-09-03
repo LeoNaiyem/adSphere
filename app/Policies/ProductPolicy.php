@@ -4,63 +4,52 @@ namespace App\Policies;
 
 use App\Models\Product;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class ProductPolicy
 {
     /**
-     * Determine whether the user can view any models.
+     * Admin check helper.
      */
-    public function viewAny(User $user): bool
+    protected function isAdmin(User $user): bool
     {
-        return false;
+        return $user->role === 'admin'; // adjust if you store role differently
     }
 
     /**
-     * Determine whether the user can view the model.
-     */
-    public function view(User $user, Product $product): bool
-    {
-        return false;
-    }
-
-    /**
-     * Determine whether the user can create models.
+     * Any logged-in user can create a product.
+     * Admin can too.
      */
     public function create(User $user): bool
     {
-        return false;
+        return true; // allow both user + admin
     }
 
     /**
-     * Determine whether the user can update the model.
+     * Update product: Admin or product owner.
      */
     public function update(User $user, Product $product): bool
     {
-        return false;
+        return $this->isAdmin($user) || $user->id === $product->user_id;
     }
 
     /**
-     * Determine whether the user can delete the model.
+     * Delete product: Admin or product owner.
      */
     public function delete(User $user, Product $product): bool
     {
-        return false;
+        return $this->isAdmin($user) || $user->id === $product->user_id;
     }
 
     /**
-     * Determine whether the user can restore the model.
+     * View product: Everyone (optional).
      */
-    public function restore(User $user, Product $product): bool
+    public function viewAny(?User $user): bool
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Determine whether the user can permanently delete the model.
-     */
-    public function forceDelete(User $user, Product $product): bool
+    public function view(?User $user, Product $product): bool
     {
-        return false;
+        return true;
     }
 }

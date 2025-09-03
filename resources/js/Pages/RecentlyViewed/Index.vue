@@ -1,6 +1,7 @@
 <script setup>
+import UserLayout from "@/Layouts/UserLayout.vue";
 import { Link } from "@inertiajs/vue3";
-
+defineOptions({layout:UserLayout});
 defineProps({
   recentlyViewed: Array, // Products with brand + category + pivot.viewed_at
 });

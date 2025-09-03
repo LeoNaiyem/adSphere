@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
 use App\Models\Product;
 use App\Models\Category;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    use AuthorizesRequests;
     public function index(Request $request)
     {
         $filters = $request->only(['category_id', 'brand_id', 'condition', 'min_price', 'max_price']);
@@ -23,6 +25,7 @@ class ProductController extends Controller
             ->when($filters['condition'] ?? null, fn($q, $v) => $q->where('condition', $v))
             ->when($filters['min_price'] ?? null, fn($q, $v) => $q->where('price', '>=', $v))
             ->when($filters['max_price'] ?? null, fn($q, $v) => $q->where('price', '<=', $v))
+            ->latest()
             ->paginate(12)
             ->withQueryString();
 
@@ -37,7 +40,7 @@ class ProductController extends Controller
 
     public function create()
     {
-        return Inertia::render('Admin/Products/Create', [
+        return Inertia::render('Products/Create', [
             'categories' => Category::all(),
             'brands' => Brand::all(),
         ]);
@@ -45,7 +48,21 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        $product = Product::create($request->validated());
+        // dd($request);
+        $this->authorize('create', Product::class);
+
+        $product = Product::create([
+            ...$request->validated(),
+            'user_id' => auth()->id(),
+        ]);
+
+        // Handle multiple image uploads
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('products', 'public');
+                $product->images()->create(['path' => $path]);
+            }
+        }
 
         // Dynamic attributes
         if ($request->has('attributes')) {
@@ -60,18 +77,21 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product created.');
     }
 
+
     public function show(Product $product)
     {
         $user = auth()->user();
 
+
         // Load relationships
-        $product->load(['category', 'brand', 'details']);
+        $product->load(['category', 'brand', 'details','images']);
 
         // Example images: if using Spatie Media Library
-        $product->images = $product->getMedia('images')->map->getUrl();
+        $images = $product->images->map(fn($img) => asset('storage/' . $img->path));
 
         return Inertia::render('Products/Show', [
             'product' => $product,
+            'images'=>$images,
             'inWishlist' => $user ? $user->wishlist->contains($product->id) : false,
         ]);
     }
@@ -88,12 +108,25 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         $product->update($request->validated());
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $image) {
+                $path = $image->store('products', 'public');
+                $product->images()->create(['path' => $path]);
+            }
+        }
         return redirect()->route('products.index')->with('success', 'Product updated.');
     }
 
     public function destroy(Product $product)
     {
+        // delete images from storage
+        foreach ($product->images as $image) {
+            \Storage::disk('public')->delete($image->path);
+        }
+
         $product->delete();
-        return redirect()->route('products.index')->with('success', 'Product deleted.');
+
+        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
     }
+
 }

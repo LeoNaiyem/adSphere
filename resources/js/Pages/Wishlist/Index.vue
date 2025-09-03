@@ -1,8 +1,9 @@
 <script setup>
+import UserLayout from "@/Layouts/UserLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
-
+defineOptions({layout:UserLayout})
 defineProps({
-  wishlist: Array, // List of products with brand + category
+  wishlist: Array,
 });
 
 const removeForm = useForm({});

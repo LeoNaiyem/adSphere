@@ -17,6 +17,7 @@ class Product extends Model
         'condition',
         'description',
         'status',
+        'user_id'
     ];
 
     public function category()
@@ -44,5 +45,10 @@ class Product extends Model
         return $this->belongsToMany(User::class, 'recently_viewed_products')
             ->withPivot('viewed_at')
             ->withTimestamps();
+    }
+
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
     }
 }

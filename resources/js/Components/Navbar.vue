@@ -39,6 +39,7 @@ const { auth } = usePage().props;
           <template v-if="auth.user">
             <div class="flex items-center space-x-4">
               <span class="text-gray-700">Hi, {{ auth.user.name }}</span>
+            <Link :href="route('products.create')" class="text-sm bg-blue-600 text-white py-2 px-3 rounded  hover:text-blue-600 hover:bg-white hover:border-blue-600 hover:border border-transparent">Crate Ad</Link>
               <Link
                 :href="route('profile.edit')"
                 class="text-sm text-gray-600 hover:text-blue-600"
@@ -61,6 +62,8 @@ const { auth } = usePage().props;
               <Link :href="route('register')" class="text-sm hover:text-blue-600">Register</Link>
             </div>
           </template>
+          <div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,10 @@
 <script setup>
-import { useForm } from '@inertiajs/vue3'
-import { ref } from 'vue'
+import ErrorMessages from '@/Components/ErrorMessages.vue';
+import Navbar from '@/Components/Navbar.vue';
+import { useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
+// const { errors } = usePage().props;
+// console.log(errors);
 
 const props = defineProps({
   categories: Array,
@@ -14,10 +18,12 @@ const form = useForm({
   brand_id: '',
   price: '',
   condition: 'new',
+  status:1,
   description: '',
   attributes: {},
   images: [],
 })
+
 
 // Local preview for images
 const previews = ref([])
@@ -37,10 +43,12 @@ const submit = () => {
 </script>
 
 <template>
+  <Head title="Create | Ad"/>
+  <Navbar/>
   <div class="max-w-5xl mx-auto bg-white p-6 rounded-xl shadow-md">
     <h1 class="text-2xl font-bold mb-6">Create Product</h1>
-
-    <form @submit.prevent="submit" class="space-y-6">
+    <ErrorMessages :errors="form.errors"/>
+    <form @submit.prevent="submit" class="space-y-6" enctype="multipart/form-data">
       <!-- Title -->
       <div>
         <label class="block text-sm font-medium mb-1">Title</label>
