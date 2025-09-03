@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
-use App\Models\Category;
-use App\Models\Product;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class DashboardController extends Controller
@@ -14,12 +10,9 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
+
         if ($user->role === 'admin') {
-            return Inertia::render('Admin/Dashboard', [
-                'productsCount' => Product::count(),
-                'categoriesCount' => Category::count(),
-                'brandsCount' => Brand::count(),
-            ]);
+            return app(AdminDashboardController::class)->index();
         }
 
         return Inertia::render('User/Dashboard', [

@@ -1,5 +1,8 @@
 <script setup>
-import Navbar from "@/Components/Navbar.vue";
+import UserLayout from "@/Layouts/UserLayout.vue";
+defineOptions({
+    layout: UserLayout,
+});
 
 defineProps({
     wishlist: Array,
@@ -8,7 +11,7 @@ defineProps({
 </script>
 
 <template>
-    <Navbar />
+    <Head title="Dashboard" />
     <div class="p-6">
         <h1 class="text-2xl font-bold mb-6">User Dashboard</h1>
 

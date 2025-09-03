@@ -1,10 +1,11 @@
 <script setup>
-import Navbar from '@/Components/Navbar.vue';
-
+import AdminLayout from "@/Layouts/AdminLayout.vue";
+defineOptions({ layout: AdminLayout });
 defineProps({ products: Object });
 </script>
 
 <template>
+  <Head title="Products"/>
   <Navbar/>
   <div class="p-6">
     <h1 class="text-2xl font-bold mb-4">📦 Products</h1>

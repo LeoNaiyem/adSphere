@@ -15,10 +15,23 @@ const { auth } = usePage().props;
 
         <!-- Navigation Links -->
         <div class="hidden md:flex space-x-6">
+          <!-- Common Links -->
           <Link href="/" class="hover:text-blue-600">Home</Link>
-          <Link v-if="auth.user" :href="route('wishlist.index')" class="hover:text-blue-600">Wishlist</Link>
-          <Link v-if="auth.user" :href="route('recently-viewed.index')" class="hover:text-blue-600">Recently Viewed</Link>
-          <Link v-if="auth.user" :href="route('dashboard')" class="hover:text-blue-600">Dashboard</Link>
+
+          <!-- User Links -->
+          <template v-if="auth.user && auth.user.role !== 'admin'">
+            <Link :href="route('wishlist.index')" class="hover:text-blue-600">Wishlist</Link>
+            <Link :href="route('recently-viewed.index')" class="hover:text-blue-600">Recently Viewed</Link>
+            <Link :href="route('dashboard')" class="hover:text-blue-600">Dashboard</Link>
+          </template>
+
+          <!-- Admin Links -->
+          <template v-if="auth.user && auth.user.role === 'admin'">
+            <Link :href="route('dashboard')" class="hover:text-blue-600">Admin Dashboard</Link>
+            <Link :href="route('categories.index')" class="hover:text-blue-600">Categories</Link>
+            <Link :href="route('brands.index')" class="hover:text-blue-600">Brands</Link>
+            <Link :href="route('products.index')" class="hover:text-blue-600">Products</Link>
+          </template>
         </div>
 
         <!-- User Menu -->

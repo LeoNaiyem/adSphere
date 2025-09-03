@@ -23,6 +23,7 @@ function applyFilters() {
 </script>
 
 <template>
+  <Head title="Home | Products"/>
   <Navbar/>
   <div class="p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
     <!-- Sidebar Filters -->
