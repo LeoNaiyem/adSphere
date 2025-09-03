@@ -1,4 +1,5 @@
 <script setup>
+import Navbar from "@/Components/Navbar.vue";
 import { Link, useForm } from "@inertiajs/vue3";
 
 const {products,categories,brands,filters} =defineProps({
@@ -22,6 +23,7 @@ function applyFilters() {
 </script>
 
 <template>
+  <Navbar/>
   <div class="p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
     <!-- Sidebar Filters -->
     <aside class="space-y-4">

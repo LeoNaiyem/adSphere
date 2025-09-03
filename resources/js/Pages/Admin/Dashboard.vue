@@ -1,4 +1,6 @@
 <script setup>
+import Navbar from '@/Components/Navbar.vue';
+
 defineProps({
   productsCount: Number,
   categoriesCount: Number,
@@ -7,6 +9,7 @@ defineProps({
 </script>
 
 <template>
+  <Navbar/>
   <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-4">
     <div class="bg-white rounded shadow p-4 text-center">
       <h2 class="text-xl font-bold">{{ productsCount }}</h2>
