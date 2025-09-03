@@ -1,9 +1,10 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
+import Title from '@/Components/Title.vue';
+import GuestLayout from '@/Layouts/GuestLayout.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
@@ -25,6 +26,7 @@ const submit = () => {
         <Head title="Register" />
 
         <form @submit.prevent="submit">
+            <Title class="text-primary text-center my-2"> Register </Title>
             <div>
                 <InputLabel for="name" value="Name" />
 
@@ -97,7 +99,7 @@ const submit = () => {
                     :href="route('login')"
                     class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    Already registered?
+                    Already registered? Login
                 </Link>
 
                 <PrimaryButton

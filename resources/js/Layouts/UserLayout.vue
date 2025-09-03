@@ -1,4 +1,5 @@
 <script setup>
+import Logo from "@/Components/Logo.vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import { onMounted, ref, watch } from "vue";
 
@@ -37,7 +38,8 @@ function toggleMobile() {
     >
       <!-- Logo + Collapse -->
       <div class="flex items-center justify-between p-4 border-b">
-        <span class="text-xl font-bold text-blue-600" v-if="!collapsed">AdSphere</span>
+        <Logo class="w-full" v-if="!collapsed"/>
+        
         <!-- Desktop collapse -->
         <button @click="toggleSidebar" class="hidden md:block p-2 hover:bg-gray-100">
           <i :class="collapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-left'"></i>
@@ -95,7 +97,7 @@ function toggleMobile() {
     <!-- Main Content Area -->
     <div :class="['flex-1 flex flex-col transition-all', collapsed ? 'md:ml-20' : 'md:ml-64']">
       <!-- Fixed Header -->
-      <header class="fixed top-0 right-0 left-0 bg-white shadow p-4 flex justify-between items-center z-30"
+      <header class="fixed top-0 right-0 left-0 bg-white shadow px-6 py-[26px] flex justify-between items-center z-30"
         :class="collapsed ? 'md:ml-20' : 'md:ml-64'">
         <!-- Mobile sidebar toggle -->
         <button @click="toggleMobile" class="md:hidden p-2 hover:bg-gray-100">

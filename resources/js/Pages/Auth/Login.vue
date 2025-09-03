@@ -1,11 +1,13 @@
 <script setup>
-import Checkbox from '@/Components/Checkbox.vue';
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import Checkbox from "@/Components/Checkbox.vue";
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import TextInput from "@/Components/TextInput.vue";
+import TextLink from "@/Components/TextLink.vue";
+import Title from "@/Components/Title.vue";
+import GuestLayout from "@/Layouts/GuestLayout.vue";
+import { Head, Link, useForm } from "@inertiajs/vue3";
 
 defineProps({
     canResetPassword: {
@@ -17,14 +19,14 @@ defineProps({
 });
 
 const form = useForm({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
     remember: false,
 });
 
 const submit = () => {
-    form.post(route('login'), {
-        onFinish: () => form.reset('password'),
+    form.post(route("login"), {
+        onFinish: () => form.reset("password"),
     });
 };
 </script>
@@ -38,6 +40,7 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
+            <Title class="text-primary text-center my-2"> Login </Title>
             <div>
                 <InputLabel for="email" value="Email" />
 
@@ -72,19 +75,21 @@ const submit = () => {
             <div class="mt-4 block">
                 <label class="flex items-center">
                     <Checkbox name="remember" v-model:checked="form.remember" />
-                    <span class="ms-2 text-sm text-gray-600"
-                        >Remember me</span
-                    >
+                    <span class="ms-2 text-sm text-gray-600">Remember me</span>
                 </label>
             </div>
 
-            <div class="mt-4 flex items-center justify-end">
+            <div class="mt-4 flex items-center justify-end gap-2">
+                <TextLink
+                    label="New user? Register"
+                    :href="route('register')"
+                />
                 <Link
                     v-if="canResetPassword"
                     :href="route('password.request')"
                     class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
-                    Forgot your password?
+                    Forgot password?
                 </Link>
 
                 <PrimaryButton

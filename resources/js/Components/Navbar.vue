@@ -1,16 +1,20 @@
 <script setup>
 import { Link, usePage } from "@inertiajs/vue3";
+import LogoWhite from "./LogoWhite.vue";
+import WishlistIcon from "./WishlistIcon.vue";
 
 const { auth } = usePage().props;
 </script>
 
 <template>
-  <nav class="bg-white shadow mb-6">
+  <nav class="bg-primary text-white shadow mb-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16 items-center">
         <!-- Logo -->
-        <div class="flex-shrink-0">
-          <Link href="/" class="text-2xl font-bold text-blue-600">AdSphere</Link>
+        <div class="flex-shrink-0 mt-4">
+          <Link href="/" class="text-2xl font-bold text-blue-600">
+            <LogoWhite/>
+          </Link>
         </div>
 
         <!-- Navigation Links -->
@@ -62,8 +66,10 @@ const { auth } = usePage().props;
               <Link :href="route('register')" class="text-sm hover:text-blue-600">Register</Link>
             </div>
           </template>
-          <div>
-          </div>
+          <Link :href="route('wishlist.index')" class="text-sm hover:text-blue-600">
+            <WishlistIcon/> Wishlist
+          </Link>
+          <Link :href="route('wishlist.index')" class="text-sm hover:text-blue-600">Register</Link>
         </div>
       </div>
     </div>
