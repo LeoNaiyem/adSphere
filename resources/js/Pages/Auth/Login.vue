@@ -40,7 +40,7 @@ const submit = () => {
         </div>
 
         <form @submit.prevent="submit">
-            <Title class="text-primary text-center my-2"> Login </Title>
+            <Title class="text-primary-900 text-center my-2"> Login </Title>
             <div>
                 <InputLabel for="email" value="Email" />
 

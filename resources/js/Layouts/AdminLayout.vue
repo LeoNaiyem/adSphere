@@ -1,4 +1,5 @@
 <script setup>
+import Logo from "@/Components/Logo.vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import { onMounted, ref, watch } from "vue";
 
@@ -49,11 +50,13 @@ function toggleMobile() {
     >
       <!-- Logo + Collapse -->
       <div class="flex items-center justify-between p-4 border-b">
-        <Logo class="w-full" v-if="!collapsed"/>
-        <!-- <span class="text-xl font-bold text-blue-600" v-if="!collapsed">AdSphere</span> -->
+        <Link href="/">
+          <Logo class="w-full hover:scale-105 transition-all duration-100" v-if="!collapsed"/>
+        </Link>
+        
         <!-- Desktop collapse -->
-        <button @click="toggleSidebar" class="hidden md:block p-2 hover:bg-gray-100">
-          <i :class="collapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-left'"></i>
+        <button @click="toggleSidebar" class="hidden md:block p-2 hover:bg-gray-100 hover:text-primary-900">
+          <i :class="!collapsed ? 'fa fa-chevron-left' : 'fa-solid fa-bars-staggered text-xl'"></i>
         </button>
         <!-- Mobile close -->
         <button @click="toggleMobile" class="md:hidden p-2 hover:bg-gray-100">
@@ -67,7 +70,7 @@ function toggleMobile() {
         <Link
           :href="route('dashboard')"
           class="flex items-center px-3 py-2 rounded hover:bg-blue-100"
-          :class="{ 'bg-blue-600 text-white': route().current('dashboard') }"
+          :class="{ 'bg-primary-900 text-white': route().current('dashboard') }"
         >
           <i class="fa fa-chart-pie"></i>
           <span v-if="!collapsed" class="ml-2">Dashboard</span>
@@ -91,14 +94,14 @@ function toggleMobile() {
             <Link
               :href="route('categories.create')"
               class="block px-3 py-1 rounded hover:bg-blue-100"
-              :class="{ 'bg-blue-600 text-white': route().current('categories.create') }"
+              :class="{ 'bg-primary-900 text-white': route().current('categories.create') }"
             >
               ➕ Create
             </Link>
             <Link
               :href="route('categories.index')"
               class="block px-3 py-1 rounded hover:bg-blue-100"
-              :class="{ 'bg-blue-600 text-white': route().current('categories.index') }"
+              :class="{ 'bg-primary-900 text-white': route().current('categories.index') }"
             >
               📂 Manage
             </Link>
@@ -123,14 +126,14 @@ function toggleMobile() {
             <Link
               :href="route('brands.create')"
               class="block px-3 py-1 rounded hover:bg-blue-100"
-              :class="{ 'bg-blue-600 text-white': route().current('brands.create') }"
+              :class="{ 'bg-primary-900 text-white': route().current('brands.create') }"
             >
               ➕ Create
             </Link>
             <Link
               :href="route('brands.index')"
               class="block px-3 py-1 rounded hover:bg-blue-100"
-              :class="{ 'bg-blue-600 text-white': route().current('brands.index') }"
+              :class="{ 'bg-primary-900 text-white': route().current('brands.index') }"
             >
               🏷 Manage
             </Link>
@@ -155,14 +158,14 @@ function toggleMobile() {
             <Link
               :href="route('products.create')"
               class="block px-3 py-1 rounded hover:bg-blue-100"
-              :class="{ 'bg-blue-600 text-white': route().current('products.create') }"
+              :class="{ 'bg-primary-900 text-white': route().current('products.create') }"
             >
               ➕ Create
             </Link>
             <Link
               :href="route('products.index')"
               class="block px-3 py-1 rounded hover:bg-blue-100"
-              :class="{ 'bg-blue-600 text-white': route().current('products.index') }"
+              :class="{ 'bg-primary-900 text-white': route().current('products.index') }"
             >
               📦 Manage
             </Link>

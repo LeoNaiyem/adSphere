@@ -38,11 +38,13 @@ function toggleMobile() {
     >
       <!-- Logo + Collapse -->
       <div class="flex items-center justify-between p-4 border-b">
-        <Logo class="w-full" v-if="!collapsed"/>
-        
+        <Link href="/">
+          <Logo class="w-full hover:scale-105 transition-all duration-100" v-if="!collapsed"/>
+        </Link>
+
         <!-- Desktop collapse -->
         <button @click="toggleSidebar" class="hidden md:block p-2 hover:bg-gray-100">
-          <i :class="collapsed ? 'fa fa-chevron-right' : 'fa fa-chevron-left'"></i>
+          <i :class="collapsed ? 'fa fa-chevron-right' : 'fa-solid fa-bars-staggered'"></i>
         </button>
         <!-- Mobile close -->
         <button @click="toggleMobile" class="md:hidden p-2 hover:bg-gray-100">
