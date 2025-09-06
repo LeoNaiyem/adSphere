@@ -1,6 +1,5 @@
 <script setup>
 import ErrorMessages from '@/Components/ErrorMessages.vue';
-import Navbar from '@/Components/Navbar.vue';
 import { useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 // const { errors } = usePage().props;
@@ -44,7 +43,7 @@ const submit = () => {
 
 <template>
   <Head title="Create | Ad"/>
-  <Navbar/>
+  
   <div class="max-w-5xl mx-auto bg-white p-6 rounded-xl shadow-md">
     <h1 class="text-2xl font-bold mb-6">Create Product</h1>
     <ErrorMessages :errors="form.errors"/>

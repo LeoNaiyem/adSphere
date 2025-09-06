@@ -8,6 +8,8 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 defineOptions({
     layout: MainLayout,
 });
+const {products2} = defineProps({products:Object})
+console.log('procuss',products2);
 const categories = [
     {
         name: "Sports, Books, Hobbies",
@@ -142,8 +144,8 @@ function handleWishlist({ product, wishlisted }) {
             class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 max-w-screen-xl mx-auto mt-10 px-4"
         >
             <ProductCard
-                v-for="(product, index) in products"
-                :key="index"
+                v-for="product in products"
+                :key="product.id"
                 :product="product"
                 @click="goToProduct"
                 @wishlist="handleWishlist"

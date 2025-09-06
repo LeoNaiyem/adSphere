@@ -1,5 +1,4 @@
 <script setup>
-import Navbar from '@/Components/Navbar.vue';
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { router } from '@inertiajs/vue3';
 
@@ -22,7 +21,7 @@ const toggleWishlist = () => {
 </script>
 
 <template>
-  <Navbar/>
+  <Head title='Product Details'/>
   <div class="max-w-6xl mx-auto py-8 px-4 grid md:grid-cols-2 gap-8">
     <!-- Product Images -->
     <div>

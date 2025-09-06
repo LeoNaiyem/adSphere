@@ -2,6 +2,7 @@
 import Footer from "@/Components/Footer.vue";
 import ItemCard from "@/Components/ItemCard.vue";
 import Navbar from "@/Components/Navbar.vue";
+import ProductCard from "@/Components/ProductCard.vue";
 import { Link, useForm } from "@inertiajs/vue3";
 
 const { products, categories, brands, filters } = defineProps({
@@ -33,6 +34,8 @@ const clearFilters = () => {
     form.max_price = "";
     applyFilters();
 };
+
+console.log(products)
 </script>
 
 <template>
@@ -142,7 +145,7 @@ const clearFilters = () => {
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-  <ItemCard
+  <ProductCard
     v-for="p in products.data"
     :key="p.id"
     :product="p"

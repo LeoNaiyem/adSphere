@@ -3,7 +3,7 @@ import { Link, router } from '@inertiajs/vue3'
 
 const props = defineProps({
   product: Object,
-  inWishlist: Boolean, // pass this from backend
+  inWishlist: Boolean,
 })
 
 const toggleWishlist = (id) => {

@@ -1,4 +1,5 @@
 <script setup>
+import CustomLink from "@/Components/CustomLink.vue";
 import { Link, usePage } from "@inertiajs/vue3";
 import ChatIcon from "./ChatIcon.vue";
 import LogoWhite from "./LogoWhite.vue";
@@ -22,10 +23,16 @@ const { auth } = usePage().props;
                 <!-- Navigation Links -->
                 <div class="hidden md:flex space-x-6">
                     <!-- Common Links -->
-                    <Link href="/" class="hover:text-primary-300">Home</Link>
+                    <CustomLink routeName="home" componentName="Home/Index"
+                        >Home</CustomLink
+                    >
+                    <CustomLink
+                        routeName="products.index" componentName="Products/Index"
+                        >Products</CustomLink
+                    >
 
                     <!-- User Links -->
-                    <template v-if="auth.user && auth.user.role !== 'admin'">
+                    <!-- <template v-if="auth.user && auth.user.role !== 'admin'">
                         <Link
                             :href="route('wishlist.index')"
                             class="hover:text-primary-300"
@@ -41,10 +48,10 @@ const { auth } = usePage().props;
                             class="hover:text-primary-300"
                             >Dashboard</Link
                         >
-                    </template>
+                    </template> -->
 
                     <!-- Admin Links -->
-                    <template v-if="auth.user && auth.user.role === 'admin'">
+                    <!-- <template v-if="auth.user && auth.user.role === 'admin'">
                         <Link
                             :href="route('dashboard')"
                             class="hover:text-primary-300"
@@ -60,12 +67,7 @@ const { auth } = usePage().props;
                             class="hover:text-primary-300"
                             >Brands</Link
                         >
-                        <Link
-                            :href="route('products.index')"
-                            class="hover:text-primary-300"
-                            >Products</Link
-                        >
-                    </template>
+                    </template> -->
                 </div>
 
                 <!-- User Menu -->
@@ -93,12 +95,12 @@ const { auth } = usePage().props;
                         <div class="flex space-x-5">
                             <Link
                                 :href="route('login')"
-                                class=" hover:text-primary-300"
+                                class="hover:text-primary-300"
                                 >Login</Link
                             >
                             <Link
                                 :href="route('register')"
-                                class=" hover:text-primary-300"
+                                class="hover:text-primary-300"
                                 >Register</Link
                             >
                         </div>

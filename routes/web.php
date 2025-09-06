@@ -14,6 +14,8 @@ use Inertia\Inertia;
 
 // Public Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
+// Route::get('products',[ProductController::class,'index'])->name('products.index');
+// Route::get('products/{id}',[ProductController::class,'show'])->name('products.show');
 
 // Breeze Welcome page (optional)
 Route::get('/welcome', function () {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use App\Models\ProductImage;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
 use App\Models\Product;
@@ -19,7 +20,7 @@ class ProductController extends Controller
     {
         $filters = $request->only(['category_id', 'brand_id', 'condition', 'min_price', 'max_price']);
 
-        $products = Product::with(['category', 'brand'])
+        $products = Product::with(['category', 'brand','images','user'])
             ->when($filters['category_id'] ?? null, fn($q, $v) => $q->where('category_id', $v))
             ->when($filters['brand_id'] ?? null, fn($q, $v) => $q->where('brand_id', $v))
             ->when($filters['condition'] ?? null, fn($q, $v) => $q->where('condition', $v))
