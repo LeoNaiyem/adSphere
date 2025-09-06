@@ -163,7 +163,7 @@ function toggleMobile() {
               ➕ Create
             </Link>
             <Link
-              :href="route('products.index')"
+              :href="route('dashboard.products')"
               class="block px-3 py-1 rounded hover:bg-blue-100"
               :class="{ 'bg-primary-900 text-white': route().current('products.index') }"
             >

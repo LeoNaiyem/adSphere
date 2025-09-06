@@ -10,8 +10,9 @@ use Inertia\Inertia;
 
 class AdminDashboardController extends Controller
 {
-    public function index(){
-        $user=auth()->user();
+    public function index()
+    {
+        $user = auth()->user();
         $stats = [
             'users' => User::count(),
             'categories' => Category::count(),
@@ -74,6 +75,15 @@ class AdminDashboardController extends Controller
                 'bar' => $bar,
                 'line' => $line,
             ],
-        ]); 
+        ]);
+    }
+
+    public function productList()
+    {
+        $user = auth()->user();
+        if ($user->role === 'admin') {
+            $products = Product::with(['category', 'brand', 'images','user'])->latest()->paginate(10);
+            return Inertia::render('Dashboard/ProductList', ['products' => $products,'role'=>'admin']);
+        }
     }
 }
