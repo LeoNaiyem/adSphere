@@ -91,21 +91,8 @@ const { auth } = usePage().props;
                             </Link>
                         </Tooltip>
                     </div>
-                    <div v-if="!auth.user">
-                        <div class="flex space-x-5">
-                            <Link
-                                :href="route('login')"
-                                class="hover:text-primary-300"
-                                >Login</Link
-                            >
-                            <Link
-                                :href="route('register')"
-                                class="hover:text-primary-300"
-                                >Register</Link
-                            >
-                        </div>
-                    </div>
-                    <div v-else>
+                    <div v-if="auth.user">
+                        
                         <div class="flex items-center space-x-5">
                             <Tooltip text="Dashboard">
                                 <Link
@@ -136,6 +123,20 @@ const { auth } = usePage().props;
                             >
                                 Logout
                             </Link>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <div class="flex space-x-5">
+                            <Link
+                                :href="route('login')"
+                                class="hover:text-primary-300"
+                                >Login</Link
+                            >
+                            <Link
+                                :href="route('register')"
+                                class="hover:text-primary-300"
+                                >Register</Link
+                            >
                         </div>
                     </div>
 
