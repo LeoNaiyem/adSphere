@@ -16,7 +16,7 @@ defineProps({ products: Object });
         <p class="text-sm">💲 {{ product.price }}</p>
         <p class="text-sm">📂 {{ product.category?.name }} | 🏷 {{ product.brand?.name }}</p>
         <p class="text-xs text-gray-500">{{ product.condition }}</p>
-        <Link :href="route('products.edit', product.id)" class="text-blue-600 mt-2 inline-block">Edit</Link>
+        <Link :href="route('products.edit', product.id)" class="text-primary-600 mt-2 inline-block">Edit</Link>
       </div>
     </div>
   </div>

@@ -57,8 +57,8 @@ function toggleMobile() {
         <!-- Dashboard -->
         <Link
           :href="route('dashboard')"
-          class="flex items-center px-3 py-2 rounded hover:bg-blue-100"
-          :class="{ 'bg-blue-600 text-white': route().current('dashboard') }"
+          class="flex items-center px-3 py-2 rounded hover:bg-primary-100"
+          :class="{ 'bg-primary-600 text-white': route().current('dashboard') }"
         >
           <i class="fa fa-home"></i>
           <span v-if="!collapsed" class="ml-2">Dashboard</span>
@@ -67,8 +67,8 @@ function toggleMobile() {
         <!-- Wishlist -->
         <Link
           :href="route('wishlist.index')"
-          class="flex items-center px-3 py-2 rounded hover:bg-blue-100"
-          :class="{ 'bg-blue-600 text-white': route().current('wishlist.*') }"
+          class="flex items-center px-3 py-2 rounded hover:bg-primary-100"
+          :class="{ 'bg-primary-600 text-white': route().current('wishlist.*') }"
         >
           <i class="fa fa-heart"></i>
           <span v-if="!collapsed" class="ml-2">Wishlist</span>
@@ -77,8 +77,8 @@ function toggleMobile() {
         <!-- Recently Viewed -->
         <Link
           :href="route('recently-viewed.index')"
-          class="flex items-center px-3 py-2 rounded hover:bg-blue-100"
-          :class="{ 'bg-blue-600 text-white': route().current('recently-viewed.*') }"
+          class="flex items-center px-3 py-2 rounded hover:bg-primary-100"
+          :class="{ 'bg-primary-600 text-white': route().current('recently-viewed.*') }"
         >
           <i class="fa fa-eye"></i>
           <span v-if="!collapsed" class="ml-2">Recently Viewed</span>
@@ -87,8 +87,8 @@ function toggleMobile() {
         <!-- Products -->
         <Link
           :href="route('dashboard.products')"
-          class="flex items-center px-3 py-2 rounded hover:bg-blue-100"
-          :class="{ 'bg-blue-600 text-white': route().current('products.*') }"
+          class="flex items-center px-3 py-2 rounded hover:bg-primary-100"
+          :class="{ 'bg-primary-600 text-white': route().current('products.*') }"
         >
           <i class="fa fa-box"></i>
           <span v-if="!collapsed" class="ml-2">Products</span>
@@ -108,7 +108,7 @@ function toggleMobile() {
 
         <span class="text-gray-700">Hi, {{ auth.user?.name }}</span>
         <div class="flex space-x-4">
-          <Link :href="route('profile.edit')" class="text-sm hover:text-blue-600">Profile</Link>
+          <Link :href="route('profile.edit')" class="text-sm hover:text-primary-600">Profile</Link>
           <Link method="post" as="button" :href="route('logout')" class="text-sm text-red-600">Logout</Link>
         </div>
       </header>

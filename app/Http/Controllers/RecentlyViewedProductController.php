@@ -3,80 +3,63 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\RecentlyViewedProduct;
-use App\Http\Requests\StoreRecentlyViewedProductRequest;
-use App\Http\Requests\UpdateRecentlyViewedProductRequest;
-use Inertia\Inertia;
+use Illuminate\Http\Request;
 
 class RecentlyViewedProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show all recently viewed products for logged-in user.
      */
     public function index()
     {
         $recentlyViewed = auth()->user()
             ->recentlyViewed()
-            ->with(['brand', 'category'])
-            ->orderByPivot('viewed_at', 'desc')
+            ->with(['category', 'brand', 'images'])
+            ->take(20) // limit to latest 20
             ->get();
 
-        return Inertia::render('RecentlyViewed/Index', [
+        return inertia('RecentlyViewed/Index', [
             'recentlyViewed' => $recentlyViewed,
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store or update a recently viewed product.
      */
-    public function create()
+    public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+        ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreRecentlyViewedProductRequest $request)
-    {
         $product = Product::findOrFail($request->product_id);
 
+        // Attach/update pivot with fresh viewed_at
         auth()->user()->recentlyViewed()->syncWithoutDetaching([
-            $product->id => ['viewed_at' => now()]
+            $product->id => ['viewed_at' => now()],
         ]);
+
+        // 🔥 Optional: cleanup older than 20
+        $this->cleanup(auth()->id());
 
         return back();
     }
 
     /**
-     * Display the specified resource.
+     * Keep only the last 20 recently viewed products per user.
      */
-    public function show(RecentlyViewedProduct $recentlyViewedProduct)
+    protected function cleanup(int $userId): void
     {
-        //
-    }
+        $user = \App\Models\User::find($userId);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(RecentlyViewedProduct $recentlyViewedProduct)
-    {
-        //
-    }
+        $ids = $user->recentlyViewed()->pluck('products.id');
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateRecentlyViewedProductRequest $request, RecentlyViewedProduct $recentlyViewedProduct)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(RecentlyViewedProduct $recentlyViewedProduct)
-    {
-        //
+        if ($ids->count() > 20) {
+            $toDelete = $ids->slice(20); // get all but first 20
+            \DB::table('recently_viewed_products')
+                ->where('user_id', $userId)
+                ->whereIn('product_id', $toDelete)
+                ->delete();
+        }
     }
 }

@@ -69,7 +69,7 @@ function toggleMobile() {
         <!-- Dashboard -->
         <Link
           :href="route('dashboard')"
-          class="flex items-center px-3 py-2 rounded hover:bg-blue-100"
+          class="flex items-center px-3 py-2 rounded hover:bg-primary-100"
           :class="{ 'bg-primary-900 text-white': route().current('dashboard') }"
         >
           <i class="fa fa-chart-pie"></i>
@@ -80,7 +80,7 @@ function toggleMobile() {
         <div>
           <button
             @click="categoryOpen = !categoryOpen"
-            class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-blue-100"
+            class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-primary-100"
           >
             <div class="flex items-center">
               <i class="fa fa-folder"></i>
@@ -93,14 +93,14 @@ function toggleMobile() {
           <div v-show="categoryOpen && !collapsed" class="ml-6 mt-1 space-y-1">
             <Link
               :href="route('categories.create')"
-              class="block px-3 py-1 rounded hover:bg-blue-100"
+              class="block px-3 py-1 rounded hover:bg-primary-100"
               :class="{ 'bg-primary-900 text-white': route().current('categories.create') }"
             >
               ➕ Create
             </Link>
             <Link
               :href="route('categories.index')"
-              class="block px-3 py-1 rounded hover:bg-blue-100"
+              class="block px-3 py-1 rounded hover:bg-primary-100"
               :class="{ 'bg-primary-900 text-white': route().current('categories.index') }"
             >
               📂 Manage
@@ -112,7 +112,7 @@ function toggleMobile() {
         <div>
           <button
             @click="brandOpen = !brandOpen"
-            class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-blue-100"
+            class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-primary-100"
           >
             <div class="flex items-center">
               <i class="fa fa-tags"></i>
@@ -125,14 +125,14 @@ function toggleMobile() {
           <div v-show="brandOpen && !collapsed" class="ml-6 mt-1 space-y-1">
             <Link
               :href="route('brands.create')"
-              class="block px-3 py-1 rounded hover:bg-blue-100"
+              class="block px-3 py-1 rounded hover:bg-primary-100"
               :class="{ 'bg-primary-900 text-white': route().current('brands.create') }"
             >
               ➕ Create
             </Link>
             <Link
               :href="route('brands.index')"
-              class="block px-3 py-1 rounded hover:bg-blue-100"
+              class="block px-3 py-1 rounded hover:bg-primary-100"
               :class="{ 'bg-primary-900 text-white': route().current('brands.index') }"
             >
               🏷 Manage
@@ -144,7 +144,7 @@ function toggleMobile() {
         <div>
           <button
             @click="productOpen = !productOpen"
-            class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-blue-100"
+            class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-primary-100"
           >
             <div class="flex items-center">
               <i class="fa fa-box"></i>
@@ -157,14 +157,14 @@ function toggleMobile() {
           <div v-show="productOpen && !collapsed" class="ml-6 mt-1 space-y-1">
             <Link
               :href="route('products.create')"
-              class="block px-3 py-1 rounded hover:bg-blue-100"
+              class="block px-3 py-1 rounded hover:bg-primary-100"
               :class="{ 'bg-primary-900 text-white': route().current('products.create') }"
             >
               ➕ Create
             </Link>
             <Link
               :href="route('dashboard.products')"
-              class="block px-3 py-1 rounded hover:bg-blue-100"
+              class="block px-3 py-1 rounded hover:bg-primary-100"
               :class="{ 'bg-primary-900 text-white': route().current('products.index') }"
             >
               📦 Manage
@@ -186,7 +186,7 @@ function toggleMobile() {
 
         <span class="text-gray-700">Hi, {{ auth.user?.name }}</span>
         <div class="flex space-x-4">
-          <Link :href="route('profile.edit')" class="text-sm hover:text-blue-600">Profile</Link>
+          <Link :href="route('profile.edit')" class="text-sm hover:text-primary-600">Profile</Link>
           <Link method="post" as="button" :href="route('logout')" class="text-sm text-red-600">Logout</Link>
         </div>
       </header>

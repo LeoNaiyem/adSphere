@@ -15,7 +15,7 @@ const { auth } = usePage().props;
             <div class="flex justify-between h-20 items-center">
                 <!-- Logo -->
                 <div class="flex-shrink-0">
-                    <Link href="/" class="text-2xl font-bold text-blue-600">
+                    <Link href="/" class="text-2xl font-bold text-primary-600">
                         <LogoWhite />
                     </Link>
                 </div>

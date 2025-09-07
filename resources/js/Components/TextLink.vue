@@ -6,7 +6,7 @@ defineProps({
 </script>
 <template>
     <Link
-        class="text-blue-600 text-sm hover:text-blue-600 font-medium underline dark:text-blue-400 dark:hover:text-blue-500"
+        class="text-primary-600 text-sm hover:text-primary-600 font-medium underline dark:text-primary-400 dark:hover:text-primary-500"
         :href="route(routeName)"
         >{{ label }}</Link
     >

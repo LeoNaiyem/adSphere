@@ -23,7 +23,7 @@ defineProps({ categories: Object });
           <td class="p-2">{{ cat.slug }}</td>
           <td class="p-2">{{ cat.status ? 'Active' : 'Inactive' }}</td>
           <td class="p-2">
-            <Link :href="route('categories.edit', cat.id)" class="text-blue-600">Edit</Link>
+            <Link :href="route('categories.edit', cat.id)" class="text-primary-600">Edit</Link>
           </td>
         </tr>
       </tbody>

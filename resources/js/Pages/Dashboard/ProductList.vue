@@ -22,6 +22,7 @@ export default {
 
 
 <template>
+  <Head title="Products List"/>
   <Container>
     <!-- Breadcrumb + Back -->
     <div class="flex items-center gap-2 text-sm text-gray-500 mb-6">
@@ -38,7 +39,7 @@ export default {
         <h1 class="text-xl font-bold text-gray-800">Products</h1>
         <Link
           :href="route('products.create')"
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-500 text-white text-sm font-medium shadow hover:bg-primary-600 transition"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded bg-primary-500 text-white text-sm font-medium shadow hover:bg-primary-600 transition"
         >
           <i class="fas fa-plus"></i> Create New Product
         </Link>
@@ -71,7 +72,7 @@ export default {
               <td class="px-4 py-3 flex justify-end gap-2">
                 <Link
                   :href="route('products.show', product.id)"
-                  class="px-3 py-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white transition text-xs font-medium flex items-center gap-1"
+                  class="px-3 py-2 rounded-lg bg-primary-50 text-primary-600 hover:bg-primary-600 hover:text-white transition text-xs font-medium flex items-center gap-1"
                 >
                   <i class="fas fa-eye"></i> View
                 </Link>

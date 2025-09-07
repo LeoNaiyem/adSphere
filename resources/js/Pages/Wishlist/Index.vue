@@ -14,6 +14,7 @@ function removeFromWishlist(productId) {
 </script>
 
 <template>
+  <Head title="Wishlists"/>
   <div class="p-6 max-w-5xl mx-auto">
     <h1 class="text-2xl font-bold mb-6">❤️ My Wishlist</h1>
 
@@ -38,7 +39,7 @@ function removeFromWishlist(productId) {
         <div class="mt-3 flex space-x-2">
           <Link
             :href="route('products.show', product.id)"
-            class="bg-blue-600 text-white px-3 py-1 rounded text-sm"
+            class="bg-primary-600 text-white px-3 py-1 rounded text-sm"
           >
             View
           </Link>

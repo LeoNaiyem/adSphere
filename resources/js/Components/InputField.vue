@@ -34,7 +34,7 @@ defineProps({
                 :name="label"
                 :placeholder="placeholder"
                 v-model="model"
-                class="block w-full rounded-md pr-3 pl-9 text-sm dark:text-slate-900 outline-0 focus:ring-1 focus:ring-inset focus:ring-blue-400 focus:border-blue-400 placeholder:text-slate-400"
+                class="block w-full rounded-md pr-3 pl-9 text-sm dark:text-slate-900 outline-0 focus:ring-1 focus:ring-inset focus:ring-primary-400 focus:border-primary-400 placeholder:text-slate-400"
             />
         </div>
     </div>

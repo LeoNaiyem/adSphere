@@ -1,16 +1,16 @@
 <script setup>
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import {
-  ArcElement,
-  BarElement,
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
+    ArcElement,
+    BarElement,
+    CategoryScale,
+    Chart as ChartJS,
+    Legend,
+    LinearScale,
+    LineElement,
+    PointElement,
+    Title,
+    Tooltip,
 } from "chart.js";
 import { defineProps } from "vue";
 import { Bar, Line, Pie } from "vue-chartjs";
@@ -46,7 +46,7 @@ const summaryData = [
         title: "Categories",
         value: props.stats.categories,
         desc: "Total product categories",
-        gradient: "bg-gradient-to-r from-purple-600 to-blue-500",
+        gradient: "bg-gradient-to-r from-purple-600 to-primary-500",
         icon: "fas fa-list",
     },
     {

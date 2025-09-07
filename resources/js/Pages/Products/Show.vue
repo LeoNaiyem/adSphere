@@ -1,6 +1,7 @@
 <script setup>
 import MainLayout from '@/Layouts/MainLayout.vue';
 import { router } from '@inertiajs/vue3';
+import { onMounted } from "vue";
 
 defineOptions({
   layout:MainLayout,
@@ -13,12 +14,18 @@ const props = defineProps({
   seller: Object, // pass seller info from backend
 })
 
+
+
+onMounted(() => {
+  router.post(route('recently-viewed.store'), {
+    product_id: props.product.id,
+  }, { preserveScroll: true });
+});
+
 const toggleWishlist = () => {
   router.post(route('wishlist.store'), { product_id: props.product.id }, {
   preserveScroll: true,
 })
-
-  console.log(props.product.id);
 }
 </script>
 
@@ -106,7 +113,7 @@ const toggleWishlist = () => {
             <p class="text-sm text-gray-500">Last online {{ seller?.last_online }}</p>
           </div>
         </div>
-        <a href="#" class="mt-4 inline-block text-blue-600 hover:underline">
+        <a href="#" class="mt-4 inline-block text-primary-600 hover:underline">
           All ads from this user
         </a>
       </div>

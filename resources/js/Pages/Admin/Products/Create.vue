@@ -115,7 +115,7 @@ const submit = () => {
       <!-- Submit -->
       <div class="flex justify-end">
         <button type="submit" 
-          class="px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition">
+          class="px-6 py-2 bg-primary-600 text-white font-semibold rounded-lg shadow hover:bg-primary-700 transition">
           Save Product
         </button>
       </div>
