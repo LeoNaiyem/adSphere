@@ -23,6 +23,7 @@ class WishlistController extends Controller
 
     public function store(WishlistRequest $request)
     {
+        // dd($request);
         $product = Product::findOrFail($request->product_id);
         auth()->user()->wishlist()->syncWithoutDetaching([$product->id]);
 

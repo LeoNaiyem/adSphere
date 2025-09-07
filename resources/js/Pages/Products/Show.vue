@@ -14,9 +14,11 @@ const props = defineProps({
 })
 
 const toggleWishlist = () => {
-  router.post(route('wishlist.toggle', props.product.id), {}, {
-    preserveScroll: true,
-  })
+  router.post(route('wishlist.store'), { product_id: props.product.id }, {
+  preserveScroll: true,
+})
+
+  console.log(props.product.id);
 }
 </script>
 
