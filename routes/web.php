@@ -14,8 +14,6 @@ use Inertia\Inertia;
 
 // Public Home
 Route::get('/', [HomeController::class, 'index'])->name('home');
-// Route::get('products',[ProductController::class,'index'])->name('products.index');
-// Route::get('products/{id}',[ProductController::class,'show'])->name('products.show');
 
 // Breeze Welcome page (optional)
 Route::get('/welcome', function () {
@@ -45,9 +43,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/wishlist/{product}', [WishlistController::class, 'destroy'])->name('wishlist.destroy');
 
     // Recently Viewed
-    // Route::get('/recently-viewed', [RecentlyViewedProductController::class, 'index'])->name('recently-viewed.index');
-    // Route::post('/recently-viewed', [RecentlyViewedProductController::class, 'store'])->name('recently-viewed.store');
-
     Route::get('/recently-viewed', [RecentlyViewedProductController::class, 'index'])->name('recently-viewed.index');
     Route::post('/recently-viewed', [RecentlyViewedProductController::class, 'store'])->name('recently-viewed.store');
 });
@@ -56,9 +51,10 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('brands', BrandController::class);
-    Route::resource('products', ProductController::class);
+    Route::resource('products', ProductController::class)->except('index');
     Route::get('dashboard/products', [DashboardController::class, 'productList'])->name('dashboard.products');
 });
 
+Route::resource('products', ProductController::class)->only('index', 'show');
 
 require __DIR__ . '/auth.php';

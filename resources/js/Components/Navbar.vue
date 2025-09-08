@@ -1,12 +1,13 @@
 <script setup>
 import CustomLink from "@/Components/CustomLink.vue";
 import { Link, usePage } from "@inertiajs/vue3";
+import { computed } from "vue";
 import ChatIcon from "./ChatIcon.vue";
 import LogoWhite from "./LogoWhite.vue";
 import Tooltip from "./Tooltip.vue";
 import WishlistIcon from "./WishlistIcon.vue";
 
-const { auth } = usePage().props;
+const auth = computed(() => usePage().props.auth);
 </script>
 
 <template>
