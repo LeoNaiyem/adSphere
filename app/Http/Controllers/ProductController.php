@@ -83,11 +83,7 @@ class ProductController extends Controller
     {
         $user = auth()->user();
 
-
-        // Load relationships
         $product->load(['category', 'brand', 'details','images']);
-
-        // Example images: if using Spatie Media Library
         $images = $product->images->map(fn($img) => asset('storage/' . $img->path));
 
         return Inertia::render('Products/Show', [
@@ -99,7 +95,7 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        return Inertia::render('Admin/Products/Edit', [
+        return Inertia::render('Products/Edit', [
             'product' => $product->load('details'),
             'categories' => Category::all(),
             'brands' => Brand::all(),
@@ -127,7 +123,7 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+        return redirect()->route('dashboard.products')->with('success', 'Product deleted successfully.');
     }
 
 }

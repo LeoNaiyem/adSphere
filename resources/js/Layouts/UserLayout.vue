@@ -88,7 +88,7 @@ function toggleMobile() {
         <Link
           :href="route('dashboard.products')"
           class="flex items-center px-3 py-2 rounded hover:bg-primary-100"
-          :class="{ 'bg-primary-600 text-white': route().current('products.*') }"
+          :class="{ 'bg-primary-600 text-white': route().current('dashboard.products') }"
         >
           <i class="fa fa-box"></i>
           <span v-if="!collapsed" class="ml-2">Products</span>

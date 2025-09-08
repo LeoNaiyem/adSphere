@@ -37,6 +37,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    //Products routes
+    Route::resource('products', ProductController::class)->except('index');
+    Route::get('dashboard/products', [DashboardController::class, 'productList'])->name('dashboard.products');
+
     // Wishlist
     Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
     Route::post('/wishlist', [WishlistController::class, 'store'])->name('wishlist.store');
@@ -48,13 +52,11 @@ Route::middleware('auth')->group(function () {
 });
 
 // Admin routes
-Route::middleware(['auth', 'verified'])->group(function () {
+Route::middleware(['auth', 'verified', 'can:access-admin'])->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('brands', BrandController::class);
-    Route::resource('products', ProductController::class)->except('index');
-    Route::get('dashboard/products', [DashboardController::class, 'productList'])->name('dashboard.products');
 });
 
-Route::resource('products', ProductController::class)->only('index', 'show');
+Route::resource('products', ProductController::class)->only('index');
 
 require __DIR__ . '/auth.php';
