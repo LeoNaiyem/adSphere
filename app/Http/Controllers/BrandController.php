@@ -20,18 +20,27 @@ class BrandController extends Controller
 
     public function create()
     {
-        return Inertia::render('Admin/Brands/Create');
+        return Inertia::render('Admin/Brands/BrandForm');
     }
 
     public function store(StoreBrandRequest $request)
     {
-        Brand::create($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('logo')) {
+            $path = $request->file('logo')->store('brands', 'public');
+            $data['logo'] = $path;
+        }
+
+        Brand::create($data);
+
         return redirect()->route('brands.index')->with('success', 'Brand created.');
     }
 
+
     public function edit(Brand $brand)
     {
-        return Inertia::render('Admin/Brands/Edit', [
+        return Inertia::render('Admin/Brands/BrandForm', [
             'brand' => $brand,
         ]);
     }
@@ -39,6 +48,7 @@ class BrandController extends Controller
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
         $brand->update($request->validated());
+    
         return redirect()->route('brands.index')->with('success', 'Brand updated.');
     }
 

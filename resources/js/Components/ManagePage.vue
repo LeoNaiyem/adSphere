@@ -4,18 +4,16 @@ import Pagination from "@/Components/Pagination.vue";
 import { Link } from "@inertiajs/vue3";
 import { ref } from "vue";
 
-// defineOptions({ layout: AdminLayout });
-
 const props = defineProps({
-  title: String, // e.g. "Categories"
-  icon: String, // e.g. "fas fa-layer-group"
-  addRoute: String, // route for "Add New"
+  title: String, 
+  icon: String, 
+  addRoute: String, 
   addLabel: { type: String, default: "Add" },
   breadcrumbIcon: { type: String, default: "fas fa-folder-open" },
-  breadcrumbLabel: String, // e.g. "Categories"
-  data: Object, // Inertia paginated data
-  columns: Array, // [{ key: 'name', label: 'Name' }, ...]
-  routes: Object, // { view: 'categories.show', edit: 'categories.edit', destroy: 'categories.destroy' }
+  breadcrumbLabel: String, 
+  data: Object, 
+  columns: Array, 
+  routes: Object, 
 });
 
 const deleteOpen = ref(false);
@@ -77,14 +75,14 @@ const openDelete = (id) => {
             :key="item.id"
             class="hover:bg-gray-50 transition"
           >
-            <!-- Render dynamic columns -->
+            <!-- columns -->
             <td
               v-for="col in columns"
               :key="col.key"
               class="px-4 py-3"
               :class="{ 'text-center': col.key === 'actions' }"
             >
-              <!-- Status badge -->
+              <!-- Status -->
               <template v-if="col.key === 'status'">
                 <span
                   class="px-2 py-1 rounded-full text-xs font-semibold flex items-center w-fit"
@@ -124,12 +122,12 @@ const openDelete = (id) => {
                 </div>
               </template>
 
-              <!-- Default text -->
+              
               <template v-else>
-  <!-- Logo column -->
+  
   <img
     v-if="col.key === 'logo'"
-    :src="item.logo ?? '/storage/images/default-brand.jpg'"
+    :src="item.logo ? '/storage/' + item.logo : '/storage/images/default-brand.jpg'"
     alt="Brand Logo"
     class="h-10 w-10 object-cover rounded-full border-primary-500 border"
   />

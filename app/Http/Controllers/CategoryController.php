@@ -19,7 +19,7 @@ class CategoryController extends Controller
 
     public function create()
     {
-        return Inertia::render('Admin/Categories/Create', [
+        return Inertia::render('Admin/Categories/CategoryForm', [
             'categories' => Category::all(),
         ]);
     }
@@ -32,7 +32,7 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        return Inertia::render('Admin/Categories/Edit', [
+        return Inertia::render('Admin/Categories/CategoryForm', [
             'category' => $category,
             'categories' => Category::all(),
         ]);

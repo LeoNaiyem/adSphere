@@ -12,6 +12,9 @@ class UpdateBrandRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if (auth()->check() && auth()->user()->can('access-admin')) {
+            return true;
+        }
         return false;
     }
 

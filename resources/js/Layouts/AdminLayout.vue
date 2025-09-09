@@ -56,7 +56,7 @@ function toggleMobile() {
         
         <!-- Desktop collapse -->
         <button @click="toggleSidebar" class="hidden md:block p-2 hover:bg-gray-100 hover:text-primary-900">
-          <i :class="!collapsed ? 'fa fa-chevron-left' : 'fa-solid fa-bars-staggered text-xl'"></i>
+          <i class="text-primary-600" :class="!collapsed ? 'fa fa-chevron-left' : 'fa-solid fa-bars-staggered text-xl'"></i>
         </button>
         <!-- Mobile close -->
         <button @click="toggleMobile" class="md:hidden p-2 hover:bg-gray-100">
