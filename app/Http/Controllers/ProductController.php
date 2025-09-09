@@ -20,7 +20,7 @@ class ProductController extends Controller
     {
         $filters = $request->only(['category_id', 'brand_id', 'condition', 'min_price', 'max_price']);
 
-        $products = Product::with(['category', 'brand','images','user'])
+        $products = Product::with(['category', 'brand', 'images', 'user'])
             ->when($filters['category_id'] ?? null, fn($q, $v) => $q->where('category_id', $v))
             ->when($filters['brand_id'] ?? null, fn($q, $v) => $q->where('brand_id', $v))
             ->when($filters['condition'] ?? null, fn($q, $v) => $q->where('condition', $v))
@@ -42,7 +42,7 @@ class ProductController extends Controller
     public function create()
     {
         return Inertia::render('Products/Create', [
-            'categories' => Category::all(),
+            'categories' => Category::with('fields')->get(),
             'brands' => Brand::all(),
         ]);
     }
@@ -83,12 +83,12 @@ class ProductController extends Controller
     {
         $user = auth()->user();
 
-        $product->load(['category', 'brand', 'details','images']);
+        $product->load(['category', 'brand', 'details', 'images']);
         $images = $product->images->map(fn($img) => asset('storage/' . $img->path));
 
         return Inertia::render('Products/Show', [
             'product' => $product,
-            'images'=>$images,
+            'images' => $images,
             'inWishlist' => $user ? $user->wishlist->contains($product->id) : false,
         ]);
     }
@@ -97,22 +97,37 @@ class ProductController extends Controller
     {
         return Inertia::render('Products/Edit', [
             'product' => $product->load('details'),
-            'categories' => Category::all(),
+            'categories' => Category::with('fields')->get(),
             'brands' => Brand::all(),
         ]);
     }
 
     public function update(UpdateProductRequest $request, Product $product)
-    {
+    {   
+        dd("Submitting form:", $request->all());
         $product->update($request->validated());
+
         if ($request->hasFile('images')) {
             foreach ($request->file('images') as $image) {
                 $path = $image->store('products', 'public');
                 $product->images()->create(['path' => $path]);
             }
         }
-        return redirect()->route('products.index')->with('success', 'Product updated.');
+
+        //dynamic attributes
+        if ($request->has('attributes')) {
+            $product->details()->delete();
+            foreach ($request->attributes as $name => $value) {
+                $product->details()->create([
+                    'attribute_name' => $name,
+                    'attribute_value' => $value,
+                ]);
+            }
+        }
+
+        return redirect()->route('dashboard.products')->with('success', 'Product updated.');
     }
+
 
     public function destroy(Product $product)
     {

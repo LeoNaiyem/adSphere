@@ -1,7 +1,5 @@
 <script setup>
-import Footer from "@/Components/Footer.vue";
-import ItemCard from "@/Components/ItemCard.vue";
-import Navbar from "@/Components/Navbar.vue";
+import Pagination from "@/Components/Pagination.vue";
 import ProductCard from "@/Components/ProductCard.vue";
 import { Link, useForm } from "@inertiajs/vue3";
 
@@ -35,7 +33,7 @@ const clearFilters = () => {
     applyFilters();
 };
 
-console.log(products)
+console.log(products);
 </script>
 
 <template>
@@ -145,28 +143,21 @@ console.log(products)
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-  <ProductCard
-    v-for="p in products.data"
-    :key="p.id"
-    :product="p"
-    :in-wishlist="p.in_wishlist"
-  />
-</div>
-
+                <ProductCard
+                    v-for="p in products.data"
+                    :key="p.id"
+                    :product="p"
+                    :in-wishlist="p.in_wishlist"
+                />
+            </div>
 
             <!-- Pagination -->
-            <div class="mt-6">
-                <div class="flex space-x-2">
-                    <Link
-                        v-for="link in products.links"
-                        :key="link.label"
-                        :href="link.url || '#'"
-                        v-html="link.label"
-                        class="px-3 py-1 border rounded"
-                        :class="{ 'bg-primary-600 text-white': link.active }"
-                    />
-                </div>
-            </div>
+            <Pagination
+                :links="products.links"
+                :from="products.from"
+                :to="products.to"
+                :total="products.total"
+            />
         </section>
     </div>
 </template>

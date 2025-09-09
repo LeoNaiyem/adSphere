@@ -4,7 +4,8 @@ import { defineEmits } from "vue";
 
 const props = defineProps({
   show: Boolean,
-  productId: Number,
+  itemId: Number,
+  routeName: String,
 });
 
 const emit = defineEmits(["close"]);
@@ -12,7 +13,7 @@ const emit = defineEmits(["close"]);
 const form = useForm({});
 
 const confirmDelete = () => {
-  form.delete(route("products.destroy", props.productId), {
+  form.delete(route(props.routeName, props.itemId), {
     onSuccess: () => emit("close"),
   });
 };
@@ -26,7 +27,7 @@ const confirmDelete = () => {
     <div class="bg-white rounded-lg shadow-lg p-6 w-96">
       <h2 class="text-lg font-semibold mb-4">Confirm Delete</h2>
       <p class="text-gray-600 mb-6">
-        Are you sure you want to delete this product? This action cannot be undone.
+        Are you sure you want to delete this Item? This action cannot be undone.
       </p>
 
       <div class="flex justify-end gap-3">

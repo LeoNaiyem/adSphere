@@ -72,7 +72,7 @@ function toggleMobile() {
           class="flex items-center px-3 py-2 rounded hover:bg-primary-100"
           :class="{ 'bg-primary-900 text-white': route().current('dashboard') }"
         >
-          <i class="fa fa-chart-pie"></i>
+          <i class="fa fa-chart-pie text-primary-500"></i>
           <span v-if="!collapsed" class="ml-2">Dashboard</span>
         </Link>
 
@@ -83,7 +83,7 @@ function toggleMobile() {
             class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-primary-100"
           >
             <div class="flex items-center">
-              <i class="fa fa-folder"></i>
+              <i class="fa fa-folder text-primary-500"></i>
               <span v-if="!collapsed" class="ml-2">Categories</span>
             </div>
             <span v-if="!collapsed">
@@ -96,14 +96,14 @@ function toggleMobile() {
               class="block px-3 py-1 rounded hover:bg-primary-100"
               :class="{ 'bg-primary-900 text-white': route().current('categories.create') }"
             >
-              ➕ Create
+              <i class="fa fa-plus text-primary-500"></i> Create
             </Link>
             <Link
               :href="route('categories.index')"
               class="block px-3 py-1 rounded hover:bg-primary-100"
               :class="{ 'bg-primary-900 text-white': route().current('categories.index') }"
             >
-              📂 Manage
+              <i class="fa fa-folder-open text-primary-500"></i> Manage
             </Link>
           </div>
         </div>
@@ -115,7 +115,7 @@ function toggleMobile() {
             class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-primary-100"
           >
             <div class="flex items-center">
-              <i class="fa fa-tags"></i>
+              <i class="fa fa-tags text-primary-500"></i>
               <span v-if="!collapsed" class="ml-2">Brands</span>
             </div>
             <span v-if="!collapsed">
@@ -128,14 +128,14 @@ function toggleMobile() {
               class="block px-3 py-1 rounded hover:bg-primary-100"
               :class="{ 'bg-primary-900 text-white': route().current('brands.create') }"
             >
-              ➕ Create
+              <i class="fa fa-plus text-primary-500"></i> Create
             </Link>
             <Link
               :href="route('brands.index')"
               class="block px-3 py-1 rounded hover:bg-primary-100"
               :class="{ 'bg-primary-900 text-white': route().current('brands.index') }"
             >
-              🏷 Manage
+              <i class="fa fa-tags text-primary-500"></i> Manage
             </Link>
           </div>
         </div>
@@ -147,7 +147,7 @@ function toggleMobile() {
             class="w-full flex items-center justify-between px-3 py-2 rounded hover:bg-primary-100"
           >
             <div class="flex items-center">
-              <i class="fa fa-box"></i>
+              <i class="fa fa-box text-primary-500"></i>
               <span v-if="!collapsed" class="ml-2">Products</span>
             </div>
             <span v-if="!collapsed">
@@ -160,14 +160,15 @@ function toggleMobile() {
               class="block px-3 py-1 rounded hover:bg-primary-100"
               :class="{ 'bg-primary-900 text-white': route().current('products.create') }"
             >
-              ➕ Create
+              <i class="fa fa-plus text-primary-500"></i> Create
             </Link>
             <Link
               :href="route('dashboard.products')"
               class="block px-3 py-1 rounded hover:bg-primary-100"
-              :class="{ 'bg-primary-900 text-white': route().current('products.index') }"
+              :class="{ 'bg-primary-900 text-white': route().current('dashboard.products') }"
             >
-              📦 Manage
+              <i class="fa fa-boxes text-primary-500"></i>
+               Manage
             </Link>
           </div>
         </div>
@@ -181,7 +182,7 @@ function toggleMobile() {
         :class="collapsed ? 'md:ml-20' : 'md:ml-64'">
         <!-- Mobile sidebar toggle -->
         <button @click="toggleMobile" class="md:hidden p-2 hover:bg-gray-100">
-          <i class="fa fa-bars"></i>
+          <i class="fa fa-bars text-primary-600"></i>
         </button>
 
         <span class="text-gray-700">Hi, {{ auth.user?.name }}</span>

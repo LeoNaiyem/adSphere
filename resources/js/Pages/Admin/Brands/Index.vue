@@ -1,21 +1,33 @@
 <script setup>
+import ManagePage from "@/Components/ManagePage.vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
+
 defineOptions({ layout: AdminLayout });
 defineProps({ brands: Object });
 </script>
 
 <template>
-  <div class="p-6">
-    <h1 class="text-2xl font-bold mb-4">🏷 Brands</h1>
+  <Head title="Brand List" />
 
-    <ul class="space-y-2">
-      <li v-for="brand in brands.data" :key="brand.id" class="border p-3 rounded">
-        <div class="flex justify-between">
-          <span class="font-medium">{{ brand.name }}</span>
-          <Link :href="route('brands.edit', brand.id)" class="text-primary-600">Edit</Link>
-        </div>
-        <p class="text-sm text-gray-500">{{ brand.description }}</p>
-      </li>
-    </ul>
-  </div>
+  <ManagePage
+    title="Brands"
+    icon="fas fa-tags"
+    breadcrumbIcon="fas fa-tags"
+    breadcrumbLabel="Brands"
+    addRoute="brands.create"
+    addLabel="Add Brand"
+    :data="brands"
+    :columns="[
+      { key: 'logo', label: 'Logo' },
+      { key: 'name', label: 'Name' },
+      { key: 'description', label: 'Description' },
+      { key: 'created_at', label: 'Created At' },
+      { key: 'actions', label: 'Actions' },
+    ]"
+    :routes="{
+      view: 'brands.show',
+      edit: 'brands.edit',
+      destroy: 'brands.destroy'
+    }"
+  />
 </template>

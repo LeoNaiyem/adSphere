@@ -28,7 +28,7 @@ class DashboardController extends Controller
         if ($user->role === 'admin') {
             return app(AdminDashboardController::class)->productList();
         }
-        $products = Product::with(['user','category','images','brand'])->where('user_id', $user->id)->latest()->paginate();
+        $products = Product::with(['user','category','images','brand'])->where('user_id', $user->id)->latest()->paginate(10);
         return Inertia::render('Dashboard/ProductList', [
             'products' => $products,
             'role'=>'user'

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryFieldController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
@@ -55,8 +56,16 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth', 'verified', 'can:access-admin'])->group(function () {
     Route::resource('categories', CategoryController::class);
     Route::resource('brands', BrandController::class);
+
+    // category fields
+    Route::get('categories/{category}/fields', [CategoryFieldController::class, 'index'])
+        ->name('categories.fields.index');
+    Route::post('categories/{category}/fields', [CategoryFieldController::class, 'store'])
+        ->name('categories.fields.store');
+    Route::delete('categories/fields/{field}', [CategoryFieldController::class, 'destroy'])
+        ->name('categories.fields.destroy');
 });
 
-Route::resource('products', ProductController::class)->only('index');
+Route::get('products', [ProductController::class, 'index'])->name('products.index');
 
 require __DIR__ . '/auth.php';

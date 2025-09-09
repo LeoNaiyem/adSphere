@@ -1,5 +1,8 @@
 <script setup>
+import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { useForm } from '@inertiajs/vue3';
+
+defineOptions({ layout: AdminLayout });
 
 const form = useForm({
   name: '',
