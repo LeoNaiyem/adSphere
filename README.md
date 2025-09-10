@@ -1,6 +1,6 @@
-# 🛍️ AdSphere – E-commerce Application
+# 🛍️ AdSphere – Ad Listing Application
 
-AdSphere is a modern e-commerce platform built with **Laravel**, **Inertia.js**, **Vue 3**, and **TailwindCSS**.  
+AdSphere is a modern ad listing platform built with **Laravel**, **Inertia.js**, **Vue 3**, and **TailwindCSS**.  
 It provides a smooth SPA-like user experience with role-based dashboards for **Admin** and **User**.
 
 ---
@@ -16,16 +16,19 @@ It provides a smooth SPA-like user experience with role-based dashboards for **A
 - User registration & login
 - Role-based access (**Admin / User**)
 
+
 ### 👤 User Dashboard
 - **Quick Stats**: Total posted products, Wishlist count, Recently Viewed count
 - **Wishlist Management**: Add/remove products with a toggle
 - **Recently Viewed Products**: Tracks browsing history with timestamps
 - Manage own products (create, edit, delete)
+![User Dashboard Screenshot](docs/screenshots/adSphere-user-dashboard.png)
 
 ### 🛠️ Admin Dashboard
 - Manage **Categories**, **Brands**, and **Products**
 - Sidebar with collapsible menus
 - Category-based **Dynamic Attributes** (extra fields on product creation/edit form)
+![Admin Dashboard Screenshot](docs/screenshots/adSphere-admin-dashboard.png)
 
 ### 📦 Product Management
 - Upload multiple images per product
@@ -33,27 +36,31 @@ It provides a smooth SPA-like user experience with role-based dashboards for **A
 - Dynamic category-specific fields
 - Wishlist toggle
 - Recently viewed tracker
+![Product page Screenshot](docs/screenshots/adSphere-productpage.png)
 
 ### ❤️ Wishlist System
 - Add/remove products with a single toggle
-- Display wishlist on both **Dashboard** and **Wishlist Page**
+- Display wishlist on **Dashboard** and **Wishlist Page**
+
 
 ### 👁️ Recently Viewed
 - Tracks user activity
 - Displays last 20 products with category, brand, and viewed time
+![Recently Viewed Screenshot](docs/screenshots/adSphere-user-recentlyview.png)
 
 ### 📊 Home Page
 - Shows **Most Viewed Products**
 - Product cards with image, title, price, wishlist toggle
+![Homepage Screenshot](docs/screenshots/adSphere-homepage.png)
 
 ---
 
 ## 🛠️ Tech Stack
-- **Backend:** Laravel 10+
+- **Backend:** Laravel 12+
 - **Frontend:** Vue 3 + Inertia.js
 - **Styling:** TailwindCSS + FontAwesome
-- **Database:** MySQL (or PostgreSQL)
-- **Auth:** Laravel Breeze / Jetstream
+- **Database:** MySQL
+- **Auth:** Laravel Breeze
 
 ---
 
