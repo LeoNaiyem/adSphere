@@ -1,9 +1,36 @@
 <script setup>
 import Logo from "@/Components/Logo.vue";
+import Toast from "@/Components/Toast.vue";
+
 import { Link, usePage } from "@inertiajs/vue3";
 import { onMounted, ref, watch } from "vue";
 
 const { auth } = usePage().props;
+
+const page = usePage();
+
+// Toast state
+const toastShow = ref(false);
+const toastMessage = ref("");
+const toastType = ref("success");
+
+// React when flash changes
+watch(
+  () => page.props.flash,
+  (flash) => {
+    if (flash?.success) {
+      toastMessage.value = flash.success;
+      toastType.value = "success";
+      toastShow.value = true;
+    }
+    if (flash?.error) {
+      toastMessage.value = flash.error;
+      toastType.value = "error";
+      toastShow.value = true;
+    }
+  },
+  { immediate: true }
+);
 
 // Sidebar states
 const collapsed = ref(false);
@@ -33,18 +60,27 @@ function toggleMobile() {
       :class="[
         'bg-white shadow-md transition-all duration-300 fixed top-0 left-0 z-40 h-screen flex flex-col',
         collapsed ? 'w-20' : 'w-64',
-        mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+        mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
       ]"
     >
       <!-- Logo + Collapse -->
       <div class="flex items-center justify-between p-4 border-b">
         <Link href="/">
-          <Logo class="w-full hover:scale-105 transition-all duration-100" v-if="!collapsed"/>
+          <Logo
+            class="w-full hover:scale-105 transition-all duration-100"
+            v-if="!collapsed"
+          />
         </Link>
 
         <!-- Desktop collapse -->
-        <button @click="toggleSidebar" class="hidden md:block p-2 hover:bg-gray-100 text-lg">
-          <i class="text-primary-600" :class="collapsed ? 'fa fa-chevron-right' : 'fa-solid fa-bars-staggered'"></i>
+        <button
+          @click="toggleSidebar"
+          class="hidden md:block p-2 hover:bg-gray-100 text-lg"
+        >
+          <i
+            class="text-primary-600"
+            :class="collapsed ? 'fa fa-chevron-right' : 'fa-solid fa-bars-staggered'"
+          ></i>
         </button>
         <!-- Mobile close -->
         <button @click="toggleMobile" class="md:hidden p-2 hover:bg-gray-100">
@@ -97,10 +133,17 @@ function toggleMobile() {
     </aside>
 
     <!-- Main Content Area -->
-    <div :class="['flex-1 flex flex-col transition-all', collapsed ? 'md:ml-20' : 'md:ml-64']">
+    <div
+      :class="[
+        'flex-1 flex flex-col transition-all',
+        collapsed ? 'md:ml-20' : 'md:ml-64',
+      ]"
+    >
       <!-- Fixed Header -->
-      <header class="fixed top-0 right-0 left-0 bg-white shadow px-6 py-[26px] flex justify-between items-center z-30"
-        :class="collapsed ? 'md:ml-20' : 'md:ml-64'">
+      <header
+        class="fixed top-0 right-0 left-0 bg-white shadow px-6 py-[26px] flex justify-between items-center z-30"
+        :class="collapsed ? 'md:ml-20' : 'md:ml-64'"
+      >
         <!-- Mobile sidebar toggle -->
         <button @click="toggleMobile" class="md:hidden p-2 hover:bg-gray-100">
           <i class="fa fa-bars"></i>
@@ -108,8 +151,16 @@ function toggleMobile() {
 
         <span class="text-gray-700">Hi, {{ auth.user?.name }}</span>
         <div class="flex space-x-4">
-          <Link :href="route('profile.edit')" class="text-sm hover:text-primary-600">Profile</Link>
-          <Link method="post" as="button" :href="route('logout')" class="text-sm text-red-600">Logout</Link>
+          <Link :href="route('profile.edit')" class="text-sm hover:text-primary-600"
+            >Profile</Link
+          >
+          <Link
+            method="post"
+            as="button"
+            :href="route('logout')"
+            class="text-sm text-red-600"
+            >Logout</Link
+          >
         </div>
       </header>
 
@@ -118,9 +169,19 @@ function toggleMobile() {
         <slot />
       </main>
 
+      <!-- Toast Notification -->
+      <Toast
+        :show="toastShow"
+        :message="toastMessage"
+        :type="toastType"
+        @close="toastShow = false"
+      />
+
       <!-- Fixed Footer -->
-      <footer class="fixed bottom-0 right-0 left-0 bg-white shadow p-3 text-center text-sm text-gray-600 z-20"
-        :class="collapsed ? 'md:ml-20' : 'md:ml-64'">
+      <footer
+        class="fixed bottom-0 right-0 left-0 bg-white shadow p-3 text-center text-sm text-gray-600 z-20"
+        :class="collapsed ? 'md:ml-20' : 'md:ml-64'"
+      >
         © {{ new Date().getFullYear() }} AdSphere
       </footer>
     </div>

@@ -56,7 +56,7 @@ defineProps({
         </h2>
         <div class="bg-white shadow rounded-xl overflow-hidden">
           <table class="w-full text-left text-sm">
-            <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+            <thead class="bg-primary-50 text-gray-600 uppercase text-xs">
               <tr>
                 <th class="px-4 py-3">Title</th>
                 <th class="px-4 py-3">Brand</th>
@@ -89,7 +89,7 @@ defineProps({
         </h2>
         <div class="bg-white shadow rounded-xl overflow-hidden">
           <table class="w-full text-left text-sm">
-            <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+            <thead class="bg-primary-50 text-gray-600 uppercase text-xs">
               <tr>
                 <th class="px-4 py-3">Title</th>
                 <th class="px-4 py-3">Brand</th>
@@ -120,7 +120,7 @@ defineProps({
         </h2>
         <div class="bg-white shadow rounded-xl overflow-hidden">
           <table class="w-full text-left text-sm">
-            <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+            <thead class="bg-primary-50 text-gray-600 uppercase text-xs">
               <tr>
                 <th class="px-4 py-3">Title</th>
                 <th class="px-4 py-3">Category</th>

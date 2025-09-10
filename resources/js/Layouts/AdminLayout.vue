@@ -1,9 +1,18 @@
 <script setup>
 import Logo from "@/Components/Logo.vue";
 import { Link, usePage } from "@inertiajs/vue3";
+import Toast from "@/Components/Toast.vue";
+
 import { onMounted, ref, watch } from "vue";
 
 const { auth } = usePage().props;
+
+const page = usePage();
+
+// Toast state
+const toastShow = ref(false);
+const toastMessage = ref("");
+const toastType = ref("success");
 
 // Sidebar states
 const collapsed = ref(false);
@@ -197,7 +206,15 @@ function toggleMobile() {
         <slot />
       </main>
 
-      <!-- Fixed Footer -->
+      <!-- Toast Notification -->
+      <Toast
+        :show="toastShow"
+        :message="toastMessage"
+        :type="toastType"
+        @close="toastShow = false"
+      />
+
+      <!-- Footer -->
       <footer class="fixed bottom-0 right-0 left-0 bg-white shadow p-3 text-center text-sm text-gray-600 z-20"
         :class="collapsed ? 'md:ml-20' : 'md:ml-64'">
         © 2025 AdSphere Admin Panel
