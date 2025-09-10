@@ -8,8 +8,8 @@ import MainLayout from "@/Layouts/MainLayout.vue";
 defineOptions({
     layout: MainLayout,
 });
-const {products2} = defineProps({products:Object})
-console.log('procuss',products2);
+
+defineProps({products:Object, brands:Object});
 const categories = [
     {
         name: "Sports, Books, Hobbies",
@@ -49,44 +49,7 @@ const categories = [
     },
 ];
 
-const products = [
-    {
-        id: 1,
-        title: "Rim flanges 5x127 / 5x114.3 / 5x130 71.6 25mm 30mm 35mm 40mm 50mm",
-        price: 30,
-        image: "https://via.placeholder.com/300",
-        location: "Sofia city, 7th 11th kilometer",
-        updated: "Updated on September 03, 2025",
-        hasDelivery: false,
-    },
-    {
-        id: 2,
-        title: "Boiler 70kW Pellets Wood",
-        price: 5200,
-        image: "https://via.placeholder.com/300",
-        location: "Sofia, Buxton",
-        updated: "September 02, 2025",
-        hasDelivery: true,
-    },
-    {
-        id: 3,
-        title: "Canister 20 l./30 l./40 l./50 l./120 l.",
-        price: 5.09,
-        image: "https://via.placeholder.com/300",
-        location: "Varna, Western Industrial Zone",
-        updated: "Updated on September 1, 2025",
-        hasDelivery: false,
-    },
-    {
-        id: 4,
-        title: "Facade frame scaffolding for rent",
-        price: 1.9,
-        image: "https://via.placeholder.com/300",
-        location: "Sofia, Druzhba 1",
-        updated: "Updated Today at 02:01 AM.",
-        hasDelivery: true,
-    },
-];
+
 
 function goToProduct(product) {
     console.log("Navigate to product:", product);
@@ -101,42 +64,56 @@ function handleWishlist({ product, wishlisted }) {
 }
 </script>
 <template>
+    {{ 
+console.log(brands)
+
+     }}
     <Head title="Home" />
-    <Container class="bg-primary-50">
+    <Container class="bg-primary-50 bg-opacity-60">
         <SearchBox class="bg-white" />
     </Container>
-    <Container class="bg-white">
+     <Container class="bg-gradient-to-b from-gray-50 to-white py-12">
         <div class="max-w-screen-xl mx-auto px-4">
-            <Title class="text-center mb-6 text-2xl font-semibold"
-                >Main Categories</Title
-            >
+            <!-- Section Title -->
+            <h2 class="text-center text-3xl font-extrabold text-gray-800 mb-10">
+                Trusted <span class="text-primary-600">Brands</span>
+            </h2>
+
+            <!-- Brand Grid -->
             <div
-                class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-4 items-center justify-center"
+                class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-6"
             >
                 <div
-                    v-for="(category, index) in categories"
-                    :key="index"
-                    class="flex flex-col p-2 items-center justify-center text-center hover:shadow-md transition"
+                    v-for="brand in brands"
+                    :key="brand.id"
+                    class="group flex flex-col items-center text-center"
                 >
+                    <!-- Logo Card -->
                     <div
-                        class="w-24 h-24 rounded-full bg-white overflow-hidden mb-1 border"
+                        class="relative w-32 h-32 flex items-center justify-center rounded-full bg-white shadow-md border border-gray-100 overflow-hidden transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl"
                     >
                         <img
-                            :src="category.image"
-                            alt="category image"
-                            class="w-full h-full object-cover"
+                            :src="brand.logo?`/storage/${brand.logo}`:'/storage/images/default-brand.jpg'"
+                            :alt="brand.name"
+                            class="w-24 h-24 object-cover rounded-full transition-transform duration-300 group-hover:scale-110"
                         />
+                        <!-- subtle overlay -->
+                        <div
+                            class="absolute inset-0 bg-gradient-to-tr from-primary-500/10 to-transparent opacity-0 group-hover:opacity-100 transition"
+                        ></div>
                     </div>
-                    <h2
-                        class="font-medium text-primary-900 px-2 mt-2 leading-tight"
+
+                    <!-- Brand Name -->
+                    <h3
+                        class="mt-3 text-sm font-semibold text-gray-700 group-hover:text-primary-600 transition"
                     >
-                        {{ category.name }}
-                    </h2>
+                        {{ brand.name }}
+                    </h3>
                 </div>
             </div>
         </div>
     </Container>
-    <Container class="bg-primary-50">
+    <Container class="bg-primary-50 bg-opacity-60">
         <Title class="text-center my-8 text-2xl font-semibold">
             Promo Ads
         </Title>

@@ -30,9 +30,9 @@ function toggleWishlist() {
 
 // Price formatter
 function formatPrice(value) {
-  return new Intl.NumberFormat('en-BG', {
+  return new Intl.NumberFormat('en-BD', {
     style: 'currency',
-    currency: 'BGN',
+    currency: 'BDT',
     maximumFractionDigits: 2
   }).format(value)
 }
@@ -56,7 +56,7 @@ onMounted(() => {
   if (props.product.images && props.product.images.length > 1) {
     interval = setInterval(() => {
       nextImage()
-    }, 10000) // slide every 3s
+    }, 10000) 
   }
 })
 
@@ -68,10 +68,10 @@ onUnmounted(() => {
 <template>
   <Link :href="route('products.show', product.id)" class="block">
   <div
-    class="relative bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100"
+    class="h-96 relative bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition border border-gray-100"
   >
     <!-- Product Image Slider -->
-    <div class="relative w-full h-52 overflow-hidden bg-gray-100">
+    <div class="relative w-full h-44 overflow-hidden bg-gray-100">
       <img
         v-if="!loading"
         :src="product.images?.length
@@ -89,17 +89,9 @@ onUnmounted(() => {
         <i class="fas fa-image text-xl"></i>
       </div>
 
-      <!-- Delivery Badge -->
-      <div
-        v-if="product.hasDelivery"
-        class="absolute top-3 right-3 bg-green-500 text-white px-2 py-1 rounded-md text-xs shadow"
-      >
-        <i class="fas fa-truck mr-1"></i> Delivery
-      </div>
-
       <!-- Wishlist Icon -->
       <div
-        class="absolute top-3 left-3 p-2 rounded-full bg-white/80 backdrop-blur-sm shadow cursor-pointer"
+        class="absolute top-3 left-3 p-2 w-10 h-10 flex items-center justify-center rounded-full bg-white/80 backdrop-blur-sm shadow cursor-pointer"
         @click.stop="toggleWishlist"
       >
         <i
@@ -141,7 +133,7 @@ onUnmounted(() => {
     <!-- Product Details -->
     <div class="p-4 space-y-2">
       <h3 class="text-base font-semibold text-gray-800 line-clamp-2">
-        {{ product.title }}
+        {{ product.title.substring(0, 40) }}{{ product.title.length > 40 ? '...' : '' }}
       </h3>
       <p class="text-lg font-bold text-primary-600">
         {{ formatPrice(product.price) }}
@@ -150,8 +142,8 @@ onUnmounted(() => {
       <!-- Meta Info Grid -->
       <div class="grid grid-cols-2 gap-2 text-xs text-gray-600">
         <p><span class="font-semibold">Condition:</span> {{ product.condition }}</p>
-        <p><span class="font-semibold">Category:</span> {{ product.category?.name }}</p>
-        <p><span class="font-semibold">Brand:</span> {{ product.brand?.name }}</p>
+        <p><span class="font-semibold">Category:</span> {{ product.category?.name.substring(0,9) }}{{ product.category?.name.length > 9 ? '...' : '' }}</p>
+        <p><span class="font-semibold">Brand:</span> {{ product.brand?.name.substring(0, 10) }}{{ product.brand?.name.length > 10 ? '...' : '' }}</p>
         <p>
           <span class="font-semibold">Updated:</span>
           {{ new Date(product.updated_at).toLocaleDateString() }}
@@ -163,11 +155,11 @@ onUnmounted(() => {
         <div
           class="h-9 w-9 flex items-center justify-center rounded-full bg-primary-100 text-primary-600 font-semibold"
         >
-          {{ product.user?.name?.charAt(0).toUpperCase() }}
+          {{ product.user?.name?.charAt(0).toUpperCase() ?? 'U' }}
         </div>
         <div>
           <p class="text-sm font-medium text-gray-800">
-            {{ product.user?.name }}
+            {{ product.user?.name ?? 'Unknown' }}
           </p>
           <p class="text-xs text-gray-500">Seller</p>
         </div>

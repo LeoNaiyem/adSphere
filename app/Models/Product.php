@@ -54,4 +54,12 @@ class Product extends Model
     {
         return $this->hasMany(ProductImage::class);
     }
+
+    public function recentlyViewedUsers()
+    {
+        return $this->belongsToMany(User::class, 'recently_viewed_products')
+            ->withPivot('viewed_at')
+            ->withTimestamps();
+    }
+
 }

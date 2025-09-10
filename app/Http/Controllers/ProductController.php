@@ -83,7 +83,7 @@ class ProductController extends Controller
     {
         $user = auth()->user();
 
-        $product->load(['category', 'brand', 'details', 'images']);
+        $product->load(['category', 'brand', 'details', 'images','user']);
         $images = $product->images->map(fn($img) => asset('storage/' . $img->path));
 
         return Inertia::render('Products/Show', [

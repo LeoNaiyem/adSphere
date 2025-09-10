@@ -24,10 +24,19 @@ class WishlistController extends Controller
     public function store(WishlistRequest $request)
     {
         $product = Product::findOrFail($request->product_id);
-        auth()->user()->wishlist()->syncWithoutDetaching([$product->id]);
+        $user = auth()->user();
 
+        if ($user->wishlist()->where('product_id', $product->id)->exists()) {
+            //remove from wishlist
+            $user->wishlist()->detach($product->id);
+            return back()->with('success', 'Product removed from wishlist.');
+        }
+
+        //add to wishlist
+        $user->wishlist()->attach($product->id);
         return back()->with('success', 'Product added to wishlist.');
     }
+
 
     public function destroy(Product $product)
     {

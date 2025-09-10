@@ -1,6 +1,6 @@
 <script setup>
-import MainLayout from '@/Layouts/MainLayout.vue';
-import { router } from '@inertiajs/vue3';
+import MainLayout from "@/Layouts/MainLayout.vue";
+import { router } from "@inertiajs/vue3";
 import { onBeforeUnmount, onMounted, ref } from "vue";
 
 defineOptions({ layout: MainLayout });
@@ -12,14 +12,19 @@ const props = defineProps({
   seller: Object,
 });
 
+console.log(props.product);
 const selectedImage = ref(props.images.length ? props.images[0] : null);
 const lightboxOpen = ref(false);
 const currentIndex = ref(0);
 
 onMounted(() => {
-  router.post(route('recently-viewed.store'), {
-    product_id: props.product.id,
-  }, { preserveScroll: true });
+  router.post(
+    route("recently-viewed.store"),
+    {
+      product_id: props.product.id,
+    },
+    { preserveScroll: true }
+  );
 
   // Close on ESC
   window.addEventListener("keydown", handleKeydown);
@@ -36,10 +41,19 @@ const handleKeydown = (e) => {
   if (e.key === "ArrowLeft") prevImage();
 };
 
+const isInWishlist = ref(props.inWishlist);
+
 const toggleWishlist = () => {
-  router.post(route('wishlist.store'), { product_id: props.product.id }, {
-    preserveScroll: true,
-  });
+  router.post(
+    route("wishlist.store"),
+    { product_id: props.product.id },
+    {
+      preserveScroll: true,
+      onSuccess: () => {
+        isInWishlist.value = !isInWishlist.value;
+      },
+    }
+  );
 };
 
 const selectImage = (img, index) => {
@@ -69,15 +83,23 @@ const prevImage = () => {
     (currentIndex.value - 1 + props.images.length) % props.images.length;
   selectedImage.value = props.images[currentIndex.value];
 };
+const formatDate = (date) => {
+  if (!date) return "N/A";
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
 </script>
 
 <template>
-  <Head title="Product Details"/>
+  <Head title="Product Details" />
   <div class="max-w-6xl mx-auto py-8 px-4 grid md:grid-cols-2 gap-10">
     <!-- Product Images -->
     <div>
       <div
-        class="aspect-w-1 aspect-h-1 w-full bg-gray-100 rounded-2xl overflow-hidden shadow-lg cursor-pointer"
+        class="aspect-w-1 aspect-h-1 w-full bg-gray-100 rounded-lg overflow-hidden shadow-lg cursor-pointer"
         @click="openLightbox(currentIndex)"
       >
         <img
@@ -86,7 +108,7 @@ const prevImage = () => {
           class="w-full h-full object-cover"
           alt="Main product image"
         />
-        <div v-else class="flex items-center justify-center h-full text-gray-400">
+        <div v-else class="flex items-center justify-center min-h-96 text-gray-400">
           No Image Available
         </div>
       </div>
@@ -112,40 +134,85 @@ const prevImage = () => {
           <h1 class="text-3xl font-bold text-gray-800">{{ product.title }}</h1>
           <button
             @click="toggleWishlist"
-            class="flex items-center gap-2 px-4 py-2 rounded-full text-white shadow transition hover:scale-110"
-            :class="inWishlist ? 'bg-red-500 hover:bg-red-600' : 'bg-primary-600 hover:bg-primary-700'"
-            :title="inWishlist ? 'Remove from wishlist' : 'Add to wishlist'"
+            class="flex items-center w-8 h-8 justify-center rounded-full text-white shadow transition hover:scale-110"
+            :class="
+              isInWishlist
+                ? 'bg-primary-500 hover:bg-primary-600'
+                : 'bg-gray-500 hover:bg-gray-600'
+            "
+            :title="isInWishlist ? 'Remove from wishlist' : 'Add to wishlist'"
           >
-            <i :class="inWishlist ? 'fas fa-heart' : 'far fa-heart'"></i>
+            <i :class="isInWishlist ? 'fas fa-heart' : 'far fa-heart'"></i>
           </button>
         </div>
 
-        <p class="text-3xl font-semibold text-primary-600 mb-4">${{ product.price }}</p>
+        <p class="text-3xl font-semibold text-primary-600 mb-4">BDT {{ product.price }}</p>
         <p class="text-gray-700 mb-6 leading-relaxed">{{ product.description }}</p>
 
+        <!-- Meta Info -->
+        <div class=" mb-8">
+          <h3 class="font-semibold text-lg text-gray-800 mb-3">Product Information</h3>
+          <div class="flex gap-3 justify-between">
+            <ul class="space-y-2 text-gray-600 text-sm">
+            <li><span class="font-medium">Product ID:</span> {{ product.id }}</li>
+            <li>
+              <span class="font-medium">Status: </span>
+              <span
+                :class="
+                  product.status === 1
+                    ? 'text-green-600 font-semibold'
+                    : 'text-red-600 font-semibold'
+                "
+                >{{ product.status === 1 ? "Active" : "Inactive" }}</span
+              >
+            </li>
+            <li>
+              <span class="font-medium">Posted:</span>
+              {{ formatDate(product.created_at) }}
+            </li>
+            <li>
+              <span class="font-medium">Last Updated:</span>
+              {{ formatDate(product.updated_at) }}
+            </li>
+          </ul>
+          
         <!-- Basic details -->
-        <div class="bg-gray-50 rounded-xl p-4 mb-6">
-          <p><span class="font-semibold">Category:</span> {{ product.category?.name }}</p>
-          <p><span class="font-semibold">Brand:</span> {{ product.brand?.name }}</p>
-          <p><span class="font-semibold">Condition:</span> {{ product.condition }}</p>
+        <div class="space-y-2 text-gray-600 text-sm">
+          <p><span class="font-medium">Category:</span> {{ product.category?.name }}</p>
+          <p><span class="font-medium">Brand:</span> {{ product.brand?.name }}</p>
+          <p class="font-medium">Condition: <span
+                :class="
+                  product.condition === 1
+                    ? 'text-green-600 font-semibold'
+                    : 'text-red-500 font-semibold'
+                "
+                >{{ product.condition === 1 ? "New" : "Used" }}</span
+              ></p>
         </div>
+          </div>
+        </div>
+
 
         <!-- Dynamic details -->
         <div v-if="product.details?.length" class="mt-4">
           <h3 class="font-semibold mb-2">Additional Details</h3>
           <ul class="list-disc list-inside text-gray-600 space-y-1">
             <li v-for="detail in product.details" :key="detail.id">
-              {{ detail.category_field?.name }}: {{ detail.value }}
+              {{ detail.attribute_name }}: {{ detail.attribute_value }}
             </li>
           </ul>
         </div>
 
         <!-- Action buttons -->
         <div class="flex gap-4 mt-8">
-          <button class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-xl shadow flex items-center gap-2">
+          <button
+            class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-lg shadow flex items-center gap-2"
+          >
             <i class="fas fa-comment"></i> Message
           </button>
-          <button class="border border-gray-400 hover:bg-gray-100 px-6 py-2 rounded-xl flex items-center gap-2">
+          <button
+            class="border border-gray-400 hover:bg-gray-100 px-6 py-2 rounded-lg flex items-center gap-2"
+          >
             <i class="fas fa-phone"></i> Call
           </button>
         </div>
@@ -154,22 +221,42 @@ const prevImage = () => {
       <!-- Seller Info -->
       <div class="border-t pt-6 mt-8">
         <div class="flex items-center gap-4">
-          <img
-            :src="seller?.avatar ?? '/images/default-avatar.png'"
+          <!-- <img
+            v-if="product.user.image"
+            :src="product.user.image ?? '/images/default-avatar.png'"
             alt="Seller"
             class="w-14 h-14 rounded-full border"
-          />
+          /> -->
+          <div
+            class="h-9 w-9 flex items-center justify-center rounded-full bg-primary-100 text-primary-600 font-semibold"
+          >
+            {{ product.user?.name?.charAt(0).toUpperCase() ?? "U" }}
+          </div>
           <div>
             <p class="font-semibold flex items-center gap-2">
-              {{ seller?.name }}
-              <i v-if="seller?.verified" class="fas fa-check-circle text-blue-500" title="Verified Seller"></i>
+              {{ product.user?.name }}
+              <i
+                v-if="product.user?.verified"
+                class="fas fa-check-circle text-blue-500"
+                title="Verified Seller"
+              ></i>
             </p>
-            <p class="text-sm text-gray-500">On AdSphere since {{ seller?.since }}</p>
-            <p class="text-sm text-gray-500">Last online {{ seller?.last_online }}</p>
+            <p class="text-sm text-gray-500">
+              On AdSphere since
+              <span class="text-primary-600">{{
+                formatDate(product.user?.created_at)
+              }}</span>
+            </p>
+            <p class="text-sm text-gray-500">
+              Last online {{ formatDate(product.user?.last_online) }}
+            </p>
           </div>
         </div>
-        <a href="#" class="mt-4 inline-block text-primary-600 hover:underline font-medium">
-          View all ads from this seller →
+        <a
+          href="#"
+          class="mt-4 inline-block text-primary-600 hover:underline font-medium"
+        >
+          View all ads from this Seller →
         </a>
       </div>
     </div>
@@ -180,17 +267,11 @@ const prevImage = () => {
     v-if="lightboxOpen"
     class="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50"
   >
-    <button
-      class="absolute top-6 right-6 text-white text-3xl"
-      @click="closeLightbox"
-    >
+    <button class="absolute top-6 right-6 text-white text-3xl" @click="closeLightbox">
       &times;
     </button>
 
-    <button
-      class="absolute left-6 text-white text-3xl"
-      @click="prevImage"
-    >
+    <button class="absolute left-6 text-white text-3xl" @click="prevImage">
       <i class="fas fa-chevron-left"></i>
     </button>
 
@@ -200,10 +281,7 @@ const prevImage = () => {
       class="max-h-[90%] max-w-[90%] object-contain rounded-lg shadow-lg"
     />
 
-    <button
-      class="absolute right-6 text-white text-3xl"
-      @click="nextImage"
-    >
+    <button class="absolute right-6 text-white text-3xl" @click="nextImage">
       <i class="fas fa-chevron-right"></i>
     </button>
   </div>
