@@ -104,7 +104,6 @@ class ProductController extends Controller
 
     public function update(UpdateProductRequest $request, Product $product)
     {   
-        dd("Submitting form:", $request->all());
         $product->update($request->validated());
 
         if ($request->hasFile('images')) {

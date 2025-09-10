@@ -17,8 +17,26 @@ class DashboardController extends Controller
         }
 
         return Inertia::render('User/Dashboard', [
-            'wishlist' => $user->wishlist()->with('brand', 'category')->get(),
-            'recentlyViewed' => $user->recentlyViewed()->with('brand', 'category')->latest('pivot_viewed_at')->get(),
+            'wishlist' => $user->wishlist()
+                ->with('brand', 'category')
+                ->latest()
+                ->take(5)
+                ->get(),
+            'recentlyViewed' => $user->recentlyViewed()
+                ->with('brand', 'category')
+                ->latest('pivot_viewed_at')
+                ->take(5)
+                ->get(),
+            'products' => $user->products()
+                ->with('brand', 'category')
+                ->latest()
+                ->take(5)
+                ->get(),
+            'stats' => [
+                'wishlist_count' => $user->wishlist()->count(),
+                'recently_viewed_count' => $user->recentlyViewed()->count(),
+                'product_count' => $user->products()->count(),
+            ],
         ]);
     }
 
@@ -28,10 +46,10 @@ class DashboardController extends Controller
         if ($user->role === 'admin') {
             return app(AdminDashboardController::class)->productList();
         }
-        $products = Product::with(['user','category','images','brand'])->where('user_id', $user->id)->latest()->paginate(10);
+        $products = Product::with(['user', 'category', 'images', 'brand'])->where('user_id', $user->id)->latest()->paginate(10);
         return Inertia::render('Dashboard/ProductList', [
             'products' => $products,
-            'role'=>'user'
+            'role' => 'user'
         ]);
     }
 }

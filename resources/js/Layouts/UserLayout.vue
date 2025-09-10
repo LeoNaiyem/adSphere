@@ -43,8 +43,8 @@ function toggleMobile() {
         </Link>
 
         <!-- Desktop collapse -->
-        <button @click="toggleSidebar" class="hidden md:block p-2 hover:bg-gray-100">
-          <i :class="collapsed ? 'fa fa-chevron-right' : 'fa-solid fa-bars-staggered'"></i>
+        <button @click="toggleSidebar" class="hidden md:block p-2 hover:bg-gray-100 text-lg">
+          <i class="text-primary-600" :class="collapsed ? 'fa fa-chevron-right' : 'fa-solid fa-bars-staggered'"></i>
         </button>
         <!-- Mobile close -->
         <button @click="toggleMobile" class="md:hidden p-2 hover:bg-gray-100">
@@ -60,7 +60,7 @@ function toggleMobile() {
           class="flex items-center px-3 py-2 rounded hover:bg-primary-100"
           :class="{ 'bg-primary-600 text-white': route().current('dashboard') }"
         >
-          <i class="fa fa-home"></i>
+          <i class="fa fa-home text-primary-500"></i>
           <span v-if="!collapsed" class="ml-2">Dashboard</span>
         </Link>
 
@@ -70,7 +70,7 @@ function toggleMobile() {
           class="flex items-center px-3 py-2 rounded hover:bg-primary-100"
           :class="{ 'bg-primary-600 text-white': route().current('wishlist.*') }"
         >
-          <i class="fa fa-heart"></i>
+          <i class="fa fa-heart text-primary-500"></i>
           <span v-if="!collapsed" class="ml-2">Wishlist</span>
         </Link>
 
@@ -80,7 +80,7 @@ function toggleMobile() {
           class="flex items-center px-3 py-2 rounded hover:bg-primary-100"
           :class="{ 'bg-primary-600 text-white': route().current('recently-viewed.*') }"
         >
-          <i class="fa fa-eye"></i>
+          <i class="fa fa-eye text-primary-500"></i>
           <span v-if="!collapsed" class="ml-2">Recently Viewed</span>
         </Link>
 
@@ -90,7 +90,7 @@ function toggleMobile() {
           class="flex items-center px-3 py-2 rounded hover:bg-primary-100"
           :class="{ 'bg-primary-600 text-white': route().current('dashboard.products') }"
         >
-          <i class="fa fa-box"></i>
+          <i class="fa fa-boxes text-primary-500"></i>
           <span v-if="!collapsed" class="ml-2">Products</span>
         </Link>
       </nav>
@@ -121,7 +121,7 @@ function toggleMobile() {
       <!-- Fixed Footer -->
       <footer class="fixed bottom-0 right-0 left-0 bg-white shadow p-3 text-center text-sm text-gray-600 z-20"
         :class="collapsed ? 'md:ml-20' : 'md:ml-64'">
-        © 2025 AdSphere
+        © {{ new Date().getFullYear() }} AdSphere
       </footer>
     </div>
   </div>

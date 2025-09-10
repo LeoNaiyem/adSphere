@@ -2,6 +2,7 @@
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { useForm } from "@inertiajs/vue3";
 import { ref, watch } from "vue";
+import ErrorMessage from "@/Components/ErrorMessages.vue";
 
 defineOptions({ layout: AdminLayout });
 
@@ -23,6 +24,7 @@ const form = useForm({
     attributes: Object.fromEntries(
         props.product.details.map((d) => [d.attribute_name, d.attribute_value])
     ),
+    _method: "PUT",
 });
 
 const selectedCategory = ref(
@@ -39,7 +41,7 @@ watch(
 );
 
 function submit() {
-  form.put(route("products.update", props.product.id), {
+  form.post(route("products.update", props.product.id), {
     preserveScroll: true,
     forceFormData: true,
     onSuccess: () => {
@@ -52,7 +54,7 @@ function submit() {
 <template>
     <div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
         <h1 class="text-2xl font-bold mb-6">Edit Product</h1>
-
+        <ErrorMessage :errors="form.errors"/>
         <form @submit.prevent="submit" class="space-y-6">
             <!-- Title -->
             <div>
@@ -100,7 +102,6 @@ function submit() {
                 <label class="block font-semibold mb-1">Price</label>
                 <input
                     v-model="form.price"
-                    type="number"
                     class="w-full border rounded-lg p-2 focus:ring focus:ring-primary-300"
                 />
             </div>

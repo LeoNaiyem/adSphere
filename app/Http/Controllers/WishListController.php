@@ -13,7 +13,7 @@ class WishlistController extends Controller
     {
         $wishlist = auth()->user()
             ->wishlist()
-            ->with(['brand', 'category'])
+            ->with(['brand', 'category', 'images'])
             ->get();
 
         return Inertia::render('Wishlist/Index', [

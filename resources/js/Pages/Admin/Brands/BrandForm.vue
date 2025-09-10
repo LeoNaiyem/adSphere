@@ -1,4 +1,5 @@
 <script setup>
+import { ref, watch } from "vue";
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import { Link, useForm } from "@inertiajs/vue3";
 
@@ -11,16 +12,60 @@ const props = defineProps({
 const form = useForm({
   name: props.brand?.name || "",
   description: props.brand?.description || "",
-  logo: null,
+  logo: null, // file field
+  _method: props.brand ? "PUT" : "POST",
 });
 
-function submit() {
-  if (props.brand) {
-    form.put(route("brands.update", props.brand.id), { method: "put" });
-  } else {
-    form.post(route("brands.store"));
+// --- Preview state
+const previewLogo = ref(props.brand?.logo ? `/storage/${props.brand.logo}` : null);
+
+// Watch for file changes
+watch(
+  () => form.logo,
+  (file) => {
+    if (file instanceof File) {
+      previewLogo.value = URL.createObjectURL(file);
+    } else if (props.brand?.logo) {
+      previewLogo.value = `/storage/${props.brand.logo}`;
+    } else {
+      previewLogo.value = null;
+    }
   }
+);
+
+// Remove/reset logo
+function removeLogo() {
+  form.logo = null;
+  previewLogo.value = props.brand?.logo ? `/storage/${props.brand.logo}` : null;
 }
+
+// Submit handler
+function submit() {
+  // Build payload manually
+  const payload = {
+    name: form.name,
+    description: form.description,
+    _method: props.brand ? "PUT" : "POST",
+  };
+
+  // ✅ Only add logo if user selected a new file
+  if (form.logo && form.logo instanceof File) {
+    payload.logo = form.logo;
+  }
+
+  const url = props.brand
+    ? route("brands.update", props.brand.id)
+    : route("brands.store");
+
+  form.post(url, {
+    preserveScroll: true,
+    forceFormData: true,
+    data: payload,
+    onSuccess: () => form.reset("logo"),
+  });
+}
+
+
 </script>
 
 <template>
@@ -84,6 +129,7 @@ function submit() {
         <label class="block mb-1 font-medium">Logo</label>
         <input
           type="file"
+          accept="image/*"
           @change="e => form.logo = e.target.files[0]"
           class="block w-full text-sm text-gray-600 border rounded-lg p-2"
         />
@@ -91,13 +137,22 @@ function submit() {
           {{ form.errors.logo }}
         </span>
 
-        <!-- Preview existing logo if editing -->
-        <div v-if="brand?.logo" class="mt-2">
+        <!-- Preview -->
+        <div v-if="previewLogo" class="mt-3 relative inline-block">
           <img
-            :src="'/storage/' + brand.logo"
-            alt="Brand Logo"
-            class="h-16 rounded shadow"
+            :src="previewLogo"
+            alt="Brand Logo Preview"
+            class="h-20 rounded shadow border"
           />
+          <!-- Remove button -->
+          <button
+            type="button"
+            @click="removeLogo"
+            class="absolute -top-2 -right-2 bg-red-500 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center shadow"
+            title="Remove logo"
+          >
+            <i class="fas fa-times text-xs"></i>
+          </button>
         </div>
       </div>
 

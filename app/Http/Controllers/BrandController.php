@@ -47,8 +47,20 @@ class BrandController extends Controller
 
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
-        $brand->update($request->validated());
-    
+        $data = $request->validated();
+
+        if ($request->hasFile('logo')) {
+            
+            if ($brand->logo && \Storage::disk('public')->exists($brand->logo)) {
+                \Storage::disk('public')->delete($brand->logo);
+            }
+            $data['logo'] = $request->file('logo')->store('brands', 'public');
+        } else {
+            unset($data['logo']); 
+        }
+
+        $brand->update($data);
+
         return redirect()->route('brands.index')->with('success', 'Brand updated.');
     }
 
