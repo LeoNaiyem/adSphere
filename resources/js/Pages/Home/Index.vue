@@ -10,44 +10,7 @@ defineOptions({
 });
 
 defineProps({products:Object, brands:Object});
-const categories = [
-    {
-        name: "Sports, Books, Hobbies",
-        image: "http://127.0.0.1:8000/storage/products/NkqHmZt9528PwndJTTGkJwxcZj310JSQo4mn5dMs.jpg",
-    },
-    {
-        name: "Electronics",
-        image: "http://127.0.0.1:8000/storage/products/NkqHmZt9528PwndJTTGkJwxcZj310JSQo4mn5dMs.jpg",
-    },
-    {
-        name: "Vehicles",
-        image: "http://127.0.0.1:8000/storage/products/NkqHmZt9528PwndJTTGkJwxcZj310JSQo4mn5dMs.jpg",
-    },
-    {
-        name: "Home & Living",
-        image: "http://127.0.0.1:8000/storage/products/NkqHmZt9528PwndJTTGkJwxcZj310JSQo4mn5dMs.jpg",
-    },
-    {
-        name: "Jobs",
-        image: "http://127.0.0.1:8000/storage/products/NkqHmZt9528PwndJTTGkJwxcZj310JSQo4mn5dMs.jpg",
-    },
-    {
-        name: "Services",
-        image: "http://127.0.0.1:8000/storage/products/NkqHmZt9528PwndJTTGkJwxcZj310JSQo4mn5dMs.jpg",
-    },
-    {
-        name: "Pets & Animals",
-        image: "http://127.0.0.1:8000/storage/products/NkqHmZt9528PwndJTTGkJwxcZj310JSQo4mn5dMs.jpg",
-    },
-    {
-        name: "Fashion",
-        image: "http://127.0.0.1:8000/storage/products/NkqHmZt9528PwndJTTGkJwxcZj310JSQo4mn5dMs.jpg",
-    },
-    {
-        name: "Others",
-        image: "http://127.0.0.1:8000/storage/products/NkqHmZt9528PwndJTTGkJwxcZj310JSQo4mn5dMs.jpg",
-    },
-];
+
 
 
 
@@ -93,7 +56,7 @@ console.log(brands)
                         class="relative w-32 h-32 flex items-center justify-center rounded-full bg-white shadow-md border border-gray-100 overflow-hidden transition-all duration-300 group-hover:scale-105 group-hover:shadow-xl"
                     >
                         <img
-                            :src="brand.logo?`/storage/${brand.logo}`:'/storage/images/default-brand.jpg'"
+                            :src="brand.logo?`/storage/${brand.logo}`:'/images/default-brand.jpg'"
                             :alt="brand.name"
                             class="w-24 h-24 object-cover rounded-full transition-transform duration-300 group-hover:scale-110"
                         />

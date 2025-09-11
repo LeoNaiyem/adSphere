@@ -127,7 +127,7 @@ const openDelete = (id) => {
   
   <img
     v-if="col.key === 'logo'"
-    :src="item.logo ? '/storage/' + item.logo : '/storage/images/default-brand.jpg'"
+    :src="item.logo ? '/storage/' + item.logo : '/images/default-brand.jpg'"
     alt="Brand Logo"
     class="h-10 w-10 object-cover rounded-full border-primary-500 border"
   />
